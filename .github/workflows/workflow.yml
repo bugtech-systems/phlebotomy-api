@@ -1,4 +1,4 @@
-name: AJA POS API
+name: PHLEBOTOMY API
 
 on:
   push:
