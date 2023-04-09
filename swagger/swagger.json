@@ -1,0 +1,120 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Phlebotomy API",
+    "description": "API for managing phlebotomy schedules and teams"
+  },
+  "basePath": "/api/v1",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "phlebotomist",
+      "description": "Operations related to phlebotomists"
+    },
+    {
+      "name": "phlebotomy_schedule",
+      "description": "Operations related to phlebotomy schedules"
+    },
+    {
+      "name": "team",
+      "description": "Operations related to teams"
+    },
+    {
+      "name": "site",
+      "description": "Operations related to sites"
+    },
+    {
+      "name": "client",
+      "description": "Operations related to clients"
+    }
+  ],
+  "definitions": {
+    "Phlebotomist": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "Unique identifier for the phlebotomist"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the phlebotomist"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the phlebotomist"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the phlebotomist"
+        },
+        "team": {
+          "type": "string",
+          "description": "Team of the phlebotomist"
+        },
+        "color": {
+          "type": "string",
+          "description": "Color assigned to the phlebotomist"
+        },
+        "emailAddress": {
+          "type": "string",
+          "description": "Email address of the phlebotomist"
+        },
+        "startingAddress": {
+          "type": "string",
+          "description": "Starting address of the phlebotomist"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start time of the phlebotomist's shift"
+        }
+      }
+    },
+    "PhlebotomySchedule": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "Unique identifier for the phlebotomy schedule"
+        },
+        "weekday": {
+          "type": "string",
+          "description": "Weekday for the phlebotomy schedule"
+        },
+        "phlebotomist": {
+          "type": "string",
+          "description": "ID of the phlebotomist assigned to the schedule"
+        },
+        "site": {
+          "type": "string",
+          "description": "ID of the site for the phlebotomy schedule"
+        }
+      }
+    },
+    "Team": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "Unique identifier for the team"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the team"
+        }
+      }
+    }
+  }
+}
+      

@@ -4,7 +4,8 @@
   "description": "Phlebotomy App - Nodejs Express MongoDB Swagger",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/jGeli/phlebotomy-api/issues"
   },
-  "homepage": "https://github.com/jGeli/phlebotomy-api#readme"
+  "homepage": "https://github.com/jGeli/phlebotomy-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3",
+    "swagger-ui-express": "^4.6.2",
+    "yamljs": "^0.3.0"
+  }
 }

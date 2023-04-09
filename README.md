@@ -41,4 +41,4 @@ Phlebotomy App - Nodejs Express MongoDB Swagger
 
 1. git clone https://github.com/jGeli/phlebotomy-api.git
 2. cd phlebotomist-api
-3. npm install express mongoose swagger-ui-express yamljs
+3. npm install express mongoose swagger-ui-express yamljs cors dotenv
