@@ -5,7 +5,8 @@ Phlebotomy App - Nodejs Express MongoDB Swagger
 
 - [x] 1. Create project folder and Setup Nodejs Express MongoDB Swagger Repository in github.
 
-- [ ] 2. Create MongoDB Models.
+- [ ] 2. Create MongoDB Models
+  
       - [ ] 1. Phlebotomist
       - [ ] 2. PhlebotomySchedule
       - [ ] 3. Team
