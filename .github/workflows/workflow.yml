@@ -1,0 +1,47 @@
+name: AJA POS API
+
+on:
+  push:
+   branches:
+      - develop
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '18.x'
+    - name: Run Yarn
+      run: yarn
+      
+  deploy:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix: 
+        node-version: [14.x]
+    
+    steps:
+      - name: Deploy to Web Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: bugtech.solutions
+          username: bugtech
+          password: 420230
+          port: 22
+          script: |
+              cd /var/www/development/solaris/phlebotomy-api
+              git pull
+              export NVM_DIR=~/.nvm
+              source ~/.nvm/nvm.sh
+              npm install
+              pm2 delete phlebotomy-api
+              pm2 start app.js --name phlebotomy-api 
+              pm2 save --force
