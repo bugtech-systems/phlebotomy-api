@@ -7,29 +7,29 @@ Phlebotomy App - Nodejs Express MongoDB Swagger
 
 - [ ] 2. Create MongoDB Models
   
-      - [ ] 1. Phlebotomist
-      - [ ] 2. PhlebotomySchedule
-      - [ ] 3. Team
-      - [ ] 4. Site
-      - [ ] 5. Clients
+            1. Phlebotomist
+            2. PhlebotomySchedule
+            3. Team
+            4. Site
+            5. Clients
 
 - [ ] 3. Create Routes.
-      - [ ] 1. Phlebotomist
-      - [ ] 2. PhlebotomySchedule
-      - [ ] 3. Team
-      - [ ] 4. Site
-      - [ ] 5. Clients
+            1. Phlebotomist
+            2. PhlebotomySchedule
+            3. Team
+            4. Site
+            5. Clients
 
 - [ ] 4. Create Controllers.
-      - [ ] 1. Phlebotomist
-      - [ ] 2. PhlebotomySchedule
-      - [ ] 3. Team
-      - [ ] 4. Site
-      - [ ] 5. Client
+            1. Phlebotomist
+            2. PhlebotomySchedule
+            3. Team
+            4. Site
+            5. Client
 
 - [ ] 5. Create Swagger API Documentation.
-      - [ ] 1. Phlebotomist
-      - [ ] 2. PhlebotomySchedule
-      - [ ] 3. Team
-      - [ ] 4. Site
-      - [ ] 5. Client
+            1. Phlebotomist
+            2. PhlebotomySchedule
+            3. Team
+            4. Site
+            5. Client
