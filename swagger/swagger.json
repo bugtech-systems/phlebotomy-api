@@ -7,8 +7,8 @@
   },
   "basePath": "/api",
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "consumes": [
     "application/json"
@@ -18,23 +18,23 @@
   ],
   "tags": [
     {
-      "name": "phlebotomist",
+      "name": "Phlebotomist",
       "description": "Operations related to phlebotomists"
     },
     {
-      "name": "phlebotomy_schedule",
+      "name": "Phlebotomy_schedule",
       "description": "Operations related to phlebotomy schedules"
     },
     {
-      "name": "team",
+      "name": "Team",
       "description": "Operations related to teams"
     },
     {
-      "name": "site",
+      "name": "Site",
       "description": "Operations related to sites"
     },
     {
-      "name": "client",
+      "name": "Client",
       "description": "Operations related to clients"
     }
   ],
@@ -42,76 +42,265 @@
     "Phlebotomist": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string",
-          "description": "Unique identifier for the phlebotomist"
-        },
         "status": {
           "type": "string",
-          "description": "Status of the phlebotomist"
+          "description": "The status of the phlebotomist",
+          "example": "Active"
         },
         "firstName": {
           "type": "string",
-          "description": "First name of the phlebotomist"
+          "description": "The first name of the phlebotomist",
+          "example": "John"
         },
         "lastName": {
           "type": "string",
-          "description": "Last name of the phlebotomist"
+          "description": "The last name of the phlebotomist",
+          "example": "Doe"
         },
         "team": {
           "type": "string",
-          "description": "Team of the phlebotomist"
+          "description": "The ID of the team the phlebotomist is assigned to",
+          "example": "6177f2a56b63c7c26140723d"
         },
         "color": {
           "type": "string",
-          "description": "Color assigned to the phlebotomist"
+          "description": "The color assigned to the phlebotomist for display purposes",
+          "example": "#FF5733"
         },
         "emailAddress": {
           "type": "string",
-          "description": "Email address of the phlebotomist"
+          "description": "The email address of the phlebotomist",
+          "example": "john.doe@example.com"
         },
         "startingAddress": {
           "type": "string",
-          "description": "Starting address of the phlebotomist"
+          "description": "The starting address of the phlebotomist",
+          "example": "123 Main St, Anytown USA"
         },
         "startTime": {
           "type": "string",
+          "description": "The start time of the phlebotomist's shift",
           "format": "date-time",
-          "description": "Start time of the phlebotomist's shift"
+          "example": "2023-03-19T14:30:00.000Z"
         }
       }
     },
     "PhlebotomySchedule": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string",
-          "description": "Unique identifier for the phlebotomy schedule"
-        },
         "weekday": {
           "type": "string",
-          "description": "Weekday for the phlebotomy schedule"
+          "description": "The day of the week the phlebotomy schedule is for",
+          "example": "Monday"
         },
         "phlebotomist": {
           "type": "string",
-          "description": "ID of the phlebotomist assigned to the schedule"
+          "description": "The ID of the phlebotomist assigned to the schedule",
+          "example": "6177f2a56b63c7c26140723d"
         },
         "site": {
           "type": "string",
-          "description": "ID of the site for the phlebotomy schedule"
+          "description": "The ID of the site the phlebotomy schedule is for",
+          "example": "6177f2a56b63c7c26140723d"
+        }
+      }
+    },
+    "Site": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "The address of the site",
+          "example": "123 Main Street"
+        },
+        "client": {
+          "type": "string",
+          "description": "The ID of the client that the site belongs to",
+          "example": "609da15ddc7413470e509a83"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the site",
+          "example": "ABC Hospital"
+        },
+        "siteId": {
+          "type": "string",
+          "description": "The unique ID of the site",
+          "example": "SITE123"
+        },
+        "siteType": {
+          "type": "string",
+          "description": "The type of the site",
+          "example": "Hospital"
+        },
+        "team": {
+          "type": "string",
+          "description": "The ID of the team responsible for the site",
+          "example": "609da15ddc7413470e509a84"
+        },
+        "phlebotomySchedules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PhlebotomySchedule"
+          },
+          "description": "The list of phlebotomy schedules for the site"
         }
       }
     },
     "Team": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string",
-          "description": "Unique identifier for the team"
-        },
         "name": {
           "type": "string",
-          "description": "Name of the team"
+          "description": "The name of the team",
+          "example": "Phlebotomy Team A"
+        }
+      }
+    },
+    "Client": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the client",
+          "example": "ABC Healthcare"
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The unique ID of the client",
+          "example": "CLIENT123"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/phlebotomists": {
+      "get": {
+        "tags": [
+          "Phlebotomist"
+        ],
+        "summary": "Get all phlebotomists",
+        "description": "Returns a list of all phlebotomists in the database",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of phlebotomists",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Phlebotomist"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Phlebotomist"
+        ],
+        "summary": "Create a new phlebotomist",
+        "description": "Creates a new phlebotomist in the database",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Phlebotomist",
+            "in": "body",
+            "description": "Phlebotomist object to be added to the database",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Phlebotomist created successfully",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          },
+          "400": {
+            "description": "Bad request, phlebotomist object not provided"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/phlebotomists/{id}": {
+      "get": {
+        "tags": [
+          "Phlebotomist"
+        ],
+        "summary": "Get a phlebotomist by ID",
+        "description": "Returns a phlebotomist with the specified ID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "default": "6432549b0d9d34ae72c7b84f",
+            "description": "ID of the phlebotomist to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Phlebotomist object",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          },
+          "404": {
+            "description": "Phlebotomist not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Phlebotomist"
+        ],
+        "summary": "Update phlebotomist by ID",
+        "description": "Updates phlebotomist in the database by ID",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Phlebotomist",
+            "in": "body",
+            "description": "Phlebotomist object to be added to the database",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Phlebotomist created successfully",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          },
+          "400": {
+            "description": "Bad request, phlebotomist object not provided"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
         }
       }
     }
