@@ -32,12 +32,12 @@ const teamsRoutes = require('./routes/team');
 const sitesRoutes = require('./routes/site');
 const clientsRoutes = require('./routes/client');
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/phlebotomists', phlebotomistsRoutes);
-app.use('/phlebotomy-schedules', phlebotomySchedulesRoutes);
-app.use('/teams', teamsRoutes);
-app.use('/sites', sitesRoutes);
-app.use('/clients', clientsRoutes);
+app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/phlebotomists', phlebotomistsRoutes);
+app.use('/api/phlebotomy-schedules', phlebotomySchedulesRoutes);
+app.use('/api/teams', teamsRoutes);
+app.use('/api/sites', sitesRoutes);
+app.use('/api/clients', clientsRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
