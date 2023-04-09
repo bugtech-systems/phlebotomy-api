@@ -5,7 +5,7 @@
     "title": "Phlebotomy API",
     "description": "API for managing phlebotomy schedules and teams"
   },
-  "basePath": "/api/v1",
+  "basePath": "/api",
   "schemes": [
     "http",
     "https"
