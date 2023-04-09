@@ -1,0 +1,19 @@
+{
+  "name": "phlebotomy-api",
+  "version": "1.0.0",
+  "description": "Phlebotomy App - Nodejs Express MongoDB Swagger",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jGeli/phlebotomy-api.git"
+  },
+  "author": "John Benedict Geli",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jGeli/phlebotomy-api/issues"
+  },
+  "homepage": "https://github.com/jGeli/phlebotomy-api#readme"
+}
