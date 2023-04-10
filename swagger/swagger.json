@@ -280,9 +280,17 @@
         ],
         "parameters": [
           {
+            "name": "id",
+            "in": "path",
+            "default": "6432549b0d9d34ae72c7b84f",
+            "description": "ID of the phlebotomist to retrieve",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "Phlebotomist",
             "in": "body",
-            "description": "Phlebotomist object to be added to the database",
+            "description": "Phlebotomist object to be updated to the database",
             "schema": {
               "$ref": "#/definitions/Phlebotomist"
             }
