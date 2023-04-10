@@ -310,6 +310,40 @@
             "description": "Internal server error"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Phlebotomist"
+        ],
+        "summary": "Delete phlebotomist by ID",
+        "description": "Delete phlebotomist in the database by ID",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "default": "6432549b0d9d34ae72c7b84f",
+            "description": "ID of the phlebotomist to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Phlebotomist deleted successfully",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          },
+          "400": {
+            "description": "Bad request, phlebotomist object not provided"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
       }
     }
   }
