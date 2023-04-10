@@ -34,7 +34,7 @@ const clientsRoutes = require('./routes/client');
 
 app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/phlebotomists', phlebotomistsRoutes);
-app.use('/api/phlebotomy-schedules', phlebotomySchedulesRoutes);
+app.use('/api/phlebotomist-schedules', phlebotomySchedulesRoutes);
 app.use('/api/teams', teamsRoutes);
 app.use('/api/sites', sitesRoutes);
 app.use('/api/clients', clientsRoutes);

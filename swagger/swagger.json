@@ -345,6 +345,164 @@
           }
         }
       }
+    },
+    "/phlebotomist-schedules": {
+      "get": {
+        "summary": "Get all Phlebotomist Schedules",
+        "description": "Retrieve a list of all Phlebotomist Schedules",
+        "tags": [
+          "Phlebotomy_schedule"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with a list of Phlebotomist Schedules",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PhlebotomySchedule"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a Phlebotomist Schedule",
+        "description": "Create a new Phlebotomist Schedule",
+        "tags": [
+          "Phlebotomy_schedule"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "PhlebotomistSchedule",
+            "in": "body",
+            "description": "Phlebotomist Schedule object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PhlebotomySchedule"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful response with the created Phlebotomist Schedule object",
+            "schema": {
+              "$ref": "#/definitions/PhlebotomySchedule"
+            }
+          },
+          "400": {
+            "description": "Bad Request. Invalid input parameters"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/phlebotomist-schedules/{id}": {
+      "get": {
+        "summary": "Get a Phlebotomist Schedule by ID",
+        "description": "Retrieve a Phlebotomist Schedule by its ID",
+        "tags": [
+          "Phlebotomy_schedule"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Phlebotomist Schedule ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with the requested Phlebotomist Schedule object",
+            "schema": {
+              "$ref": "#/definitions/PhlebotomistSchedule"
+            }
+          },
+          "404": {
+            "description": "Not Found. Phlebotomist Schedule with given ID not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+          "summary": "Update a phlebotomy schedule by ID",
+          "description": "Updates a phlebotomy schedule using the provided ID",
+          "tags": [
+            "Phlebotomy_schedule"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the phlebotomy schedule to update",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "PhlebotomistSchedule",
+              "in": "body",
+              "description": "Phlebotomist object to be updated to the database",
+              "schema": {
+                "$ref": "#/definitions/PhlebotomySchedule"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Phlebotomy schedule updated successfully"
+            },
+            "404": {
+              "description": "Phlebotomy schedule not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        },
+      "delete": {
+          "summary": "Delete a phlebotomy schedule by ID",
+          "description": "Deletes a phlebotomy schedule using the provided ID",
+          "tags": [
+            "Phlebotomy_schedule"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the phlebotomy schedule to delete",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Phlebotomy schedule deleted successfully"
+            },
+            "404": {
+              "description": "Phlebotomy schedule not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
     }
   }
 }
