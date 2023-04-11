@@ -9,13 +9,17 @@ const mongoose = require('mongoose');
 const app = express();
 
 // Middleware
+app.use(cors({
+  origin: "*"
+}));
 app.use(bodyParser.json());
-app.use(cors());
+
+
 
 //Initialize MongoDB
-mongoose.connect('mongodb://localhost:27017/phlebotomy-api', {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/phlebotomy-api', {
   useNewUrlParser: true,
- useUnifiedTopology: true,
+  useUnifiedTopology: true,
 })
 .then(() => {
   console.log('Connected to MongoDB');
