@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const clientController = require('../controllers/clientController');
 
-// Define routes for client
+// Routes
 router.get('/', clientController.getAll);
 router.get('/:id', clientController.getById);
 router.post('/', clientController.create);

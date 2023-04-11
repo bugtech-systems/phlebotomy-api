@@ -1,0 +1,99 @@
+Phlebotomist
+    id
+    Status
+    first_name
+    last_name
+    team
+    address
+    start_time
+    email
+    color
+
+Schedule
+    id
+    status
+    phlebotomist
+    site
+    weekday
+
+Team
+    id
+    name
+
+Site
+    id
+    name
+    client
+    site
+    site_type
+    team
+    address
+
+Patient
+    id
+    first_name
+    last_name
+    site
+    address
+    date_of_birth
+
+client
+    id
+    name
+    
+requisition
+    id
+    status
+    patient
+    collection_date
+    received_date
+    provider
+    site
+    comment
+    phlebotomist_comment
+    panel
+    
+Panel
+    id
+    name
+
+Sample
+    id
+    name
+    status
+    requisition
+    collection_date
+    type
+    method
+    container_type
+
+Dispatch History
+    id
+    date
+    phlebotomist
+    requisition
+    attempt_made
+
+Phlebotomist has many Schedule
+Phlebotomist has one Team
+Phlebotomist has many Dispatch History
+Schedule belongs to Phlebotomist
+Schedule belongs to Site
+Team has many Phlebotomist
+Team has many Site
+Site has many Schedule
+Site belongs to Team
+Site belongs to Client
+Site has many Patient
+Patient has many Site
+Patient has many Requisition
+Requisition belongs to Site
+Requisition belongs to Patient
+Requisition has many Dispatch History
+Requisition has many Panel
+Requisition has many Sample
+Panel has many Requisition
+Client has many Site
+Dispatch History belongs to Phlebotomist
+Dispatch History belongs to Requisition
+Sample belongs to Requisition

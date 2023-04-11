@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const phlebotomistController = require('../controllers/phlebotomistController');
 
-// Define routes for phlebotomist
+// Routes
 router.get('/', phlebotomistController.getAll);
 router.get('/:id', phlebotomistController.getById);
 router.post('/', phlebotomistController.create);

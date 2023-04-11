@@ -1,4 +1,4 @@
-const PhlebotomySchedule = require('../models/phlebotomySchedule');
+const PhlebotomySchedule = require('../models/schedule');
 
 // Define controller methods for phlebotomy schedule
 exports.getAll = async (req, res) => {

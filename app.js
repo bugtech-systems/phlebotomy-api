@@ -29,19 +29,29 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/phlebotomy-
   console.error('Error connecting to MongoDB:', err);
 });
 
-// Routes
-const phlebotomistsRoutes = require('./routes/phlebotomist');
-const phlebotomySchedulesRoutes = require('./routes/phlebotomySchedule');
-const teamsRoutes = require('./routes/team'); 
-const sitesRoutes = require('./routes/site');
-const clientsRoutes = require('./routes/client');
+// Import route modules
+const clientRoutes = require('./routes/client');
+const patientRoutes = require('./routes/patient');
+const requisitionRoutes = require('./routes/requisition');
+const sampleRoutes = require('./routes/sample');
+const dispatchHistoryRoutes = require('./routes/dispatch_history');
+const panelRoutes = require('./routes/panel');
+const phlebotomistRoutes = require('./routes/phlebotomist');
+const scheduleRoutes = require('./routes/schedule');
+const siteRoutes = require('./routes/site');
+const teamRoutes = require('./routes/team');
 
-app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api/phlebotomists', phlebotomistsRoutes);
-app.use('/api/phlebotomist-schedules', phlebotomySchedulesRoutes);
-app.use('/api/teams', teamsRoutes);
-app.use('/api/sites', sitesRoutes);
-app.use('/api/clients', clientsRoutes);
+// Use routes in the app
+app.use('/api/clients', clientRoutes);
+app.use('/api/patients', patientRoutes);
+app.use('/api/requisitions', requisitionRoutes);
+app.use('/api/samples', sampleRoutes);
+app.use('/api/dispatchHistories', dispatchHistoryRoutes);
+app.use('/api/panels', panelRoutes);
+app.use('/api/phlebotomists', phlebotomistRoutes);
+app.use('/api/schedules', scheduleRoutes);
+app.use('/api/sites', siteRoutes);
+app.use('/api/teams', teamRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5005;
