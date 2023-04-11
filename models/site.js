@@ -6,9 +6,9 @@ const siteSchema = new Schema({
       client: { type: Schema.Types.ObjectId, ref: 'Client' },
       site_type: String,
       team: { type: Schema.Types.ObjectId, ref: 'Team' },
-      schedule: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
-      requisition: [{ type: Schema.Types.ObjectId, ref: 'Requisition' }],
-      patient: [{ type: Schema.Types.ObjectId, ref: 'Patient' }],
+      // schedule: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
+      // requisition: [{ type: Schema.Types.ObjectId, ref: 'Requisition' }],
+      // patient: [{ type: Schema.Types.ObjectId, ref: 'Patient' }],
       address: String
 }, {
       timestamps: true

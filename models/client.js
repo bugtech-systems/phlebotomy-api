@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const clientSchema = new Schema({
       name: String,
-      site: [{ type: Schema.Types.ObjectId, ref: 'Site' }]
+      // site: [{ type: Schema.Types.ObjectId, ref: 'Site' }]
 }, {
       timestamps: true
 });

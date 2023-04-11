@@ -7,7 +7,7 @@ const patientSchema = new Schema({
     site: [{ type: Schema.Types.ObjectId, ref: 'Site' }],
     address: String,
     date_of_birth: Date,
-    requisition: [{ type: Schema.Types.ObjectId, ref: 'Requisition' }]
+    // requisition: [{ type: Schema.Types.ObjectId, ref: 'Requisition' }]
 }, {
     timestamps: true
 });

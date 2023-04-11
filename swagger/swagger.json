@@ -18,55 +18,31 @@
   ],
   "tags": [
     {
-      "name": "Phlebotomist",
-      "description": "Operations related to phlebotomists"
+      "name": "Phlebotomists",
+      "description": "APIs for managing phlebotomists"
     },
     {
-      "name": "Phlebotomy_schedule",
-      "description": "Operations related to phlebotomy schedules"
+      "name": "Schedules",
+      "description": "APIs for managing phlebotomy schedules"
     },
     {
-      "name": "Team",
-      "description": "Operations related to teams"
+      "name": "Sites",
+      "description": "APIs for managing sites"
     },
     {
-      "name": "Site",
-      "description": "Operations related to sites"
+      "name": "Teams",
+      "description": "APIs for managing teams"
     },
     {
-      "name": "Client",
-      "description": "Operations related to clients"
-    },
-    {
-      "name": "Patient",
-      "description": "Operations related to patients"
-    },
-    {
-      "name": "Requisition",
-      "description": "Operations related to requisitions"
-    },
-    {
-      "name": "Panel",
-      "description": "Operations related to panels"
-    },
-    {
-      "name": "Sample",
-      "description": "Operations related to Samples"
-    },
-    {
-      "name": "Panel",
-      "description": "Operations related to panels"
-    },
-    {
-      "name": "Dispatch History",
-      "description": "Operations related to dispatch history"
+      "name": "Patients",
+      "description": "APIs for managing patients"
     }
   ],
   "definitions": {
     "Phlebotomist": {
       "type": "object",
       "properties": {
-        "phlebotomis_id": {
+        "_id": {
           "type": "string",
           "description": "The unique ID of the phlebotomist",
           "example": "609da15eec7413470e509a77"
@@ -245,10 +221,10 @@
     "Client": {
       "type": "object",
       "properties": {
-        "client_id": {
+        "_id": {
           "type": "string",
           "description": "The unique ID of the client",
-          "example": "CLIENT123"
+          "example": "609da15ddc7413470e509a83"
         },
         "name": {
           "type": "string",

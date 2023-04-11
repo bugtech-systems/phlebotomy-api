@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const teamSchema = new Schema({
      name: String,
-     site: [{ type: Schema.Types.ObjectId, ref: 'Site' }],
-     phlebotomist: [{ type: Schema.Types.ObjectId, ref: 'Phlebotomist' }],
+     // site: [{ type: Schema.Types.ObjectId, ref: 'Site' }],
+     // phlebotomist: [{ type: Schema.Types.ObjectId, ref: 'Phlebotomist' }],
 }, {
      timestamps: true
 });

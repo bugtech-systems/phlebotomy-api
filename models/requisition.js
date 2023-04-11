@@ -10,9 +10,9 @@ const RequisitionSchema = new Schema({
     site: { type: Schema.Types.ObjectId, ref: 'Site' },
     comment: String,
     phlebotomist_comment: String,
-    panel: { type: Schema.Types.ObjectId, ref: 'Panel' },
-    samples: [{ type: Schema.Types.ObjectId, ref: 'Sample' }],
-    dispatch_histories: [{ type: Schema.Types.ObjectId, ref: 'DispatchHistory' }]
+    panel: [{ type: Schema.Types.ObjectId, ref: 'Panel' }],
+    // samples: [{ type: Schema.Types.ObjectId, ref: 'Sample' }],
+    // dispatch_histories: [{ type: Schema.Types.ObjectId, ref: 'DispatchHistory' }]
 }, {
     timestamps: true
 });

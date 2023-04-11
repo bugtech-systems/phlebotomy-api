@@ -10,8 +10,8 @@ const phlebotomistSchema = new Schema({
         start_time: Date,
         email: String,
         color: String,
-        dispatch_histories: [{ type: Schema.Types.ObjectId, ref: 'DispatchHistory' }],
-        schedule: [{ type: Schema.Types.ObjectId, ref: 'Schedule' }]
+        // dispatch_histories: [{ type: Schema.Types.ObjectId, ref: 'DispatchHistory' }],
+        // schedule: [{ type: Schema.Types.ObjectId, ref: 'Schedule' }]
 }, {
   timestamps: true
 });
