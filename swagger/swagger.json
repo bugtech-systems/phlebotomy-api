@@ -36,121 +36,158 @@
     {
       "name": "Client",
       "description": "Operations related to clients"
+    },
+    {
+      "name": "Patient",
+      "description": "Operations related to patients"
+    },
+    {
+      "name": "Requisition",
+      "description": "Operations related to requisitions"
+    },
+    {
+      "name": "Panel",
+      "description": "Operations related to panels"
+    },
+    {
+      "name": "Sample",
+      "description": "Operations related to Samples"
+    },
+    {
+      "name": "Panel",
+      "description": "Operations related to panels"
+    },
+    {
+      "name": "Dispatch History",
+      "description": "Operations related to dispatch history"
     }
   ],
   "definitions": {
     "Phlebotomist": {
       "type": "object",
       "properties": {
+        "phlebotomis_id": {
+          "type": "string",
+          "description": "The unique ID of the phlebotomist",
+          "example": "609da15eec7413470e509a77"
+        },
         "status": {
           "type": "string",
           "description": "The status of the phlebotomist",
           "example": "Active"
         },
-        "firstName": {
+        "first_name": {
           "type": "string",
           "description": "The first name of the phlebotomist",
           "example": "John"
         },
-        "lastName": {
+        "last_name": {
           "type": "string",
           "description": "The last name of the phlebotomist",
           "example": "Doe"
         },
-        "team": {
+        "team_id": {
           "type": "string",
           "description": "The ID of the team the phlebotomist is assigned to",
           "example": "6177f2a56b63c7c26140723d"
+        },
+        "address": {
+          "type": "string",
+          "description": "The starting address of the phlebotomist",
+          "example": "123 Main St, Anytown USA"
+        },
+        "starting_time": {
+          "type": "string",
+          "description": "The start time of the phlebotomist's shift",
+          "format": "date-time",
+          "example": "2023-03-19T14:30:00.000Z"
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the phlebotomist",
+          "example": "john.doe@example.com"
         },
         "color": {
           "type": "string",
           "description": "The color assigned to the phlebotomist for display purposes",
           "example": "#FF5733"
-        },
-        "emailAddress": {
-          "type": "string",
-          "description": "The email address of the phlebotomist",
-          "example": "john.doe@example.com"
-        },
-        "startingAddress": {
-          "type": "string",
-          "description": "The starting address of the phlebotomist",
-          "example": "123 Main St, Anytown USA"
-        },
-        "startTime": {
-          "type": "string",
-          "description": "The start time of the phlebotomist's shift",
-          "format": "date-time",
-          "example": "2023-03-19T14:30:00.000Z"
         }
       }
     },
-    "PhlebotomySchedule": {
+    "Schedule": {
       "type": "object",
       "properties": {
-        "weekday": {
+        "schedule_id": {
           "type": "string",
-          "description": "The day of the week the phlebotomy schedule is for",
-          "example": "Monday"
+          "description": "The unique ID of the schedule",
+          "example": "609da15eec7413470e509a84"
         },
-        "phlebotomist": {
+        "status": {
+          "type": "string",
+          "description": "The status of the schedule",
+          "example": "Booked"
+        },
+        "phlebotomist_id": {
           "type": "string",
           "description": "The ID of the phlebotomist assigned to the schedule",
           "example": "6177f2a56b63c7c26140723d"
         },
-        "site": {
+        "site_id": {
           "type": "string",
           "description": "The ID of the site the phlebotomy schedule is for",
           "example": "6177f2a56b63c7c26140723d"
+        },
+        "weekday": {
+          "type": "string",
+          "description": "The day of the week the phlebotomy schedule is for",
+          "example": "Monday"
         }
       }
     },
     "Site": {
       "type": "object",
       "properties": {
-        "address": {
+        "site_id": {
           "type": "string",
-          "description": "The address of the site",
-          "example": "123 Main Street"
-        },
-        "client": {
-          "type": "string",
-          "description": "The ID of the client that the site belongs to",
-          "example": "609da15ddc7413470e509a83"
+          "description": "The unique ID of the site",
+          "example": "SITE001"
         },
         "name": {
           "type": "string",
           "description": "The name of the site",
-          "$ref": "#/definitions/Client",
+          "$ref": "#/definitions/Site",
           "example": "ABC Hospital"
         },
-        "siteId": {
+        "client_id": {
           "type": "string",
-          "description": "The unique ID of the site",
-          "example": "SITE123"
+          "description": "The ID of the client that the site belongs to",
+          "example": "609da15ddc7413470e509a83"
         },
-        "siteType": {
+        "site_type": {
           "type": "string",
           "description": "The type of the site",
           "example": "Hospital"
         },
-        "team": {
+        "team_id": {
           "type": "string",
           "description": "The ID of the team responsible for the site",
           "example": "609da15ddc7413470e509a84"
         },
-        "phlebotomySchedules": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PhlebotomySchedule"
-          },
-          "description": "The list of phlebotomy schedules for the site"
+        "address": {
+          "type": "string",
+          "description": "The address of the site",
+          "example": "123 Main Street"
         }
       }
     },
     "Team": {
       "type": "object",
       "properties": {
+        "team_id": {
+          "type": "string",
+          "description": "The ID of the team responsible for the site",
+          "example": "609da15ddc7413470e509a84"
+        },
         "name": {
           "type": "string",
           "description": "The name of the team",
@@ -169,21 +206,202 @@
         ]
       }    
     },
+    "Patient": {
+      "type": "object",
+      "properties": {
+        "patient_id": {
+          "type": "string",
+          "description": "The unique ID of the patient",
+          "example": "PATIENT0123",
+          "$ref": "#/definitions/Patient"
+        },
+        "first_name": {
+          "type": "string",
+          "description": "The first name of the patient",
+          "example": "James"
+        },
+        "last_name": {
+          "type": "string",
+          "description": "The last name of the patient",
+          "example": "Deene"
+        },
+        "site_id": {
+          "type": "string",
+          "description": "The unique ID of the patient's scheduled site",
+          "example": "SITE001"
+        },
+        "address": {
+          "type": "string",
+          "description": "The address of the patient",
+          "example": "123 Main St, Anytown USA"
+        },
+        "date_of_birth": {
+          "type": "string",
+          "description": "The patient's date of birth",
+          "example": "02/03/1991"
+        }
+      }
+    },
     "Client": {
       "type": "object",
       "properties": {
+        "client_id": {
+          "type": "string",
+          "description": "The unique ID of the client",
+          "example": "CLIENT123"
+        },
         "name": {
           "type": "string",
           "description": "The name of the client",
           "example": "ABC Healthcare"
-        },
-        "clientId": {
-          "type": "string",
-          "description": "The unique ID of the client",
-          "example": "CLIENT123"
         }
       }
-    }
+    },
+    "Requisition": {
+      "type": "object",
+      "properties": {
+        "requisition_id": {
+          "type": "string",
+          "description": "The unique ID of the requisition",
+          "example": "610da15aab7413470e509a92"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the requisition",
+          "example": "Processed"
+        },
+        "patient_id": {
+          "type": "string",
+          "description": "The unique ID of the patient",
+          "example": "PATIENT0123"
+        },
+        "collection_date": {
+          "type": "date-time",
+          "description": "The date of collection of the sample",
+          "example": "03/10/2023"
+        },
+        "received_date": {
+          "type": "date-time",
+          "description": "The date the requisition was received",
+          "example": "03/08/2023"
+        },
+        "provider": {
+          "type": "date-time",
+          "description": "The details of the provider",
+          "example": "03/08/2023"
+        },
+        "site_id": {
+          "type": "string",
+          "description": "The unique ID of the requisition site",
+          "example": "SITE001"
+        },
+        "comment": {
+          "type": "string",
+          "description": "The comment pertaining to the requisition",
+          "example": "This is urgent"
+        },
+        "phlebotomist_comment": {
+          "type": "string",
+          "description": "The phlebotomist's comment pertaining to the requisition",
+          "example": "This is urgent"
+        },
+        "panel_id": {
+          "type": "string",
+          "description": "The unique ID of the panel for the requisition",
+          "example": "771da15ddc7413470e509a33"
+        }
+      }
+    },
+    "Sample": {
+      "type": "object",
+      "properties": {
+        "sample_id": {
+          "type": "string",
+          "description": "The unique ID of the sample",
+          "example": "610da15aab7413470e509b88"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the sample",
+          "example": "Sample A1"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the sample",
+          "example": "normal without findings"
+        },
+        "requisition_id": {
+          "type": "string",
+          "description": "The unique ID of the sample requisition",
+          "example": "710da15aab7413470e509a923"
+        },
+        "collection_date": {
+          "type": "date-time",
+          "description": "The date of collection of the sample",
+          "example": "03/10/2023"
+        },
+        "type": {
+          "type": "string",
+          "description": "The specific type of the sample",
+          "example": "repeat"
+        },
+        "method": {
+          "type": "string",
+          "description": "The method used to collect the sample",
+          "example": "Method A"
+        },
+        "container_type": {
+          "type": "string",
+          "description": "The type of container used for the collected sample",
+          "example": "Container B"
+        }
+      }
+    },
+    "Dispatch History": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique ID of the requisition",
+          "example": "610da15aab7413470e509a92"
+        },
+        "date": {
+          "type": "date-time",
+          "description": "The date of dispatch",
+          "example": "03/25/2023"
+        },
+        "phlebotomist_id": {
+          "type": "string",
+          "description": "The ID of the phlebotomist in charge of dispatch",
+          "example": "6177f2a56b63c7c26140723d"
+        },
+        "requisition_id": {
+          "type": "string",
+          "description": "The unique ID of the dispatched requisition",
+          "example": "610da15aab7413470e509a92"
+        },
+        "attempt_made": {
+          "type": "string",
+          "description": "The details of attempt",
+          "example": "attempt1"
+        }  
+      }
+    },
+    "Panel": {
+      "type": "object",
+      "properties": {
+        "panel_id": {
+          "type": "string",
+          "description": "The unique ID of the panel",
+          "example": "610da15ddc7413470e509a33"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the panel",
+          "example": "Panel A"
+        }
+      }
+    }    
   },
   "paths": {
     "/phlebotomists": {
@@ -957,8 +1175,339 @@
           }
         ]
       }
-    }  
-  }
-}
+    },
+    "/patient": {
+      "get": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "List all patients",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Patient"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "Create a new patient",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Patient object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PatientInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Patient"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/patients/{id}": {
+      "get": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "Get a patient by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the patient to get",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Patient"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Patient"
+        ],
+        "summary": "Update a patient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the patient to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Patient object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PatientInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Patient"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }  
+        }
+      },
+      "delete": {
+        "summary": "Delete client by ID",
+        "tags": [
+          "Patient"
+        ],
+        "description": "Deletes a patient object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the patient to delete",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },  
+    "/requisition": {
+        "get": {
+          "tags": [
+            "Requisition"
+          ],
+          "summary": "Get all requisitions",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Returns a list of all requisitions",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Requisition"
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Requisition"
+          ],
+          "summary": "Create a new requisition",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Requisition object to be created",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Requisition"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Requisition created successfully",
+              "schema": {
+                "$ref": "#/definitions/Requisition"
+              }
+            },
+            "400": {
+              "description": "Invalid request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+    },
+      "/requisition/{id}": {
+        "get": {
+          "tags": [
+            "Requisition"
+          ],
+          "summary": "Get a requisition by ID",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "ID of the requisition to be retrieved",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Returns the requisition with the specified ID",
+              "schema": {
+                "$ref": "#/definitions/Requisition"
+              }
+            },
+            "404": {
+              "description": "Requisition not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Requisition"
+          ],
+          "summary": "Update an existing requisition",
+          "description": "Updates an existing requisition with the provided ID.",
+          "operationId": "updateRequisition",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Requisition object to update",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Requisition"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful update",
+              "schema": {
+                "$ref": "#/definitions/Requisition"
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Requisition not found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Requisition"
+          ],
+          "summary": "Delete an existing requisition",
+          "description": "Deletes an existing requisition with the provided ID.",
+          "operationId": "deleteRequisition",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "204": {
+              "description": "Successful deletion"
+            },
+            "404": {
+              "description": "Requisition not found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the requisition"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the requisition"
+          },
+          "patient_id": {
+            "type": "string",
+            "description": "ID of the patient associated with the requisition"
+          },
+          "collection_date": {
+            "type": "string",
+            "description": "Date when the sample was collected"
+          },
+          "received_date": {
+            "type": "string",
+            "description": "Date when the sample was received by the lab"
+          }
+        }
+    }
+  } 
+}         
+
+
 
   
