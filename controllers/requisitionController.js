@@ -1,7 +1,7 @@
 const Requisition = require('../models/requisition');
 
 exports.getAll = async (req, res) => {
-  const panels = await Requisition.find();
+  const panels = await Requisition.find().populate([{path: 'patient', populate: {path: 'site' }}, { path: 'site' }]);;
   res.json(panels);
 };
 
