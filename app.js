@@ -15,7 +15,7 @@ app.use(cors());
 //Initialize MongoDB
 mongoose.connect('mongodb://localhost:27017/phlebotomy-api', {
   useNewUrlParser: true,
-//  useUnifiedTopology: true,
+ useUnifiedTopology: true,
 })
 .then(() => {
   console.log('Connected to MongoDB');
