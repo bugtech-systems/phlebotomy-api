@@ -30,6 +30,8 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/phlebotomy-
   console.error('Error connecting to MongoDB:', err);
 });
 
+
+
 // Import route modules
 const clientRoutes = require('./routes/client');
 const patientRoutes = require('./routes/patient');
@@ -41,6 +43,10 @@ const phlebotomistRoutes = require('./routes/phlebotomist');
 const scheduleRoutes = require('./routes/schedule');
 const siteRoutes = require('./routes/site');
 const teamRoutes = require('./routes/team');
+
+//Swagger Docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 // Use routes in the app
 app.use('/api/clients', clientRoutes);
