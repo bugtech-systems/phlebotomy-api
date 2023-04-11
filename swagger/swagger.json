@@ -121,6 +121,7 @@
         "name": {
           "type": "string",
           "description": "The name of the site",
+          "$ref": "#/definitions/Client",
           "example": "ABC Hospital"
         },
         "siteId": {
@@ -155,7 +156,18 @@
           "description": "The name of the team",
           "example": "Phlebotomy Team A"
         }
-      }
+      },
+      "TeamInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }    
     },
     "Client": {
       "type": "object",
@@ -503,7 +515,450 @@
             }
           }
         }
-    }
+    },
+    "/teams": {
+            "get": {
+            "summary": "Get a list of all teams",
+            "tags": [
+              "Team"
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful operation",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/TeamOutput"
+                  }
+                }
+              },
+              "500": {
+                "description": "Internal server error"
+              }
+            }
+          },
+          "post": {
+            "tags": [
+              "Team"
+            ],
+            "summary": "Create a new team",
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/TeamInput"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Team created successfully"
+              },
+              "400": {
+                "description": "Invalid input"
+              },
+              "500": {
+                "description": "Internal server error"
+              }
+            }
+          }
+    },
+      "/teams/{id}": {
+          "get": {
+            "summary": "Get a team by ID",
+            "tags": [
+              "Team"
+            ],
+            "parameters": [
+              {
+                "name": "teamId",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful operation",
+                "schema": {
+                  "$ref": "#/definitions/TeamOutput"
+                }
+              },
+              "404": {
+                "description": "Team not found"
+              },
+              "500": {
+                "description": "Internal server error"
+              }
+            }
+          },
+          "put": {
+            "summary": "Update a team by ID",
+            "tags": [
+              "Team"
+            ],
+            "parameters": [
+              {
+                "name": "teamId",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "body",
+                "in": "body",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/TeamInput"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Team updated successfully"
+              },
+              "400": {
+                "description": "Invalid input"
+              },
+              "404": {
+                "description": "Team not found"
+              },
+              "500": {
+                "description": "Internal server error"
+              }
+            }
+          },
+          "delete": {
+            "summary": "Delete a team by ID",
+            "tags": [
+              "Team"
+            ],
+            "parameters": [
+              {
+                "name": "teamId",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "204": {
+                "description": "Team deleted successfully"
+              },
+              "404": {
+                "description": "Team not found"
+              },
+              "500": {
+                "description": "Internal server error"
+              }
+            }
+          }
+    },
+    "/sites": {
+      "get": {
+        "summary": "Retrieve a list of all sites",
+        "tags": [
+          "Site"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of all sites",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Site"
+              }
+            }
+          },
+          "404": {
+            "description": "No sites found"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new site",
+        "tags": [
+          "Site"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "site",
+            "description": "Site object to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SiteInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The created site object",
+            "schema": {
+              "$ref": "#/definitions/Site"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/sites/{id}": {
+      "get": {
+        "summary": "Retrieve a site by ID",
+        "tags": [
+          "Site"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "siteId",
+            "description": "ID of the site to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The site object",
+            "schema": {
+              "$ref": "#/definitions/Site"
+            }
+          },
+          "404": {
+            "description": "Site not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a site by ID",
+        "tags": [
+          "Site"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "siteId",
+            "description": "ID of the site to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "site",
+            "description": "Site object to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SiteInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated site object",
+            "schema": {
+              "$ref": "#/definitions/Site"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Site not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a site by ID",
+        "tags": [
+          "Site"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "siteId",
+            "description": "ID of the site to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Site deleted"
+          },
+          "404": {
+            "description": "Site not found"
+          }
+        }
+      }
+    },
+    "/clients": {
+      "get": {
+        "summary": "Get all clients",
+        "tags": [
+          "Client"
+        ],
+        "description": "Returns a list of all clients",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Client"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new client",
+        "tags": [
+          "Client"
+        ],
+        "description": "Creates a new client",
+        "parameters": [
+          {
+            "name": "client",
+            "in": "body",
+            "description": "Client object to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClientInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Client created successfully",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/clients/{id}": {
+      "get": {
+        "summary": "Get client by ID",
+        "tags": [
+          "Client"
+        ],
+        "description": "Returns a client object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the client to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Client not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update client by ID",
+        "tags": [
+          "Client"
+        ],
+        "description": "Updates a client object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the client to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "client",
+            "in": "body",
+            "description": "Updated client object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClientInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client updated successfully",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Client not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete client by ID",
+        "tags": [
+          "Client"
+        ],
+        "description": "Deletes a client object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the client to delete",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    }  
   }
 }
-      
+
+  
