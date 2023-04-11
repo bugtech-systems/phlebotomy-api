@@ -32,7 +32,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/phlebotomy-
 // Routes
 const phlebotomistsRoutes = require('./routes/phlebotomist');
 const phlebotomySchedulesRoutes = require('./routes/phlebotomySchedule');
-const teamsRoutes = require('./routes/team');
+const teamsRoutes = require('./routes/team'); 
 const sitesRoutes = require('./routes/site');
 const clientsRoutes = require('./routes/client');
 
