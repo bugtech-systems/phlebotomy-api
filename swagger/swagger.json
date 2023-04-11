@@ -783,7 +783,7 @@
             }
           }
     },
-      "/teams/{id}": {
+    "/teams/{id}": {
           "get": {
             "summary": "Get a team by ID",
             "tags": [
@@ -1385,7 +1385,7 @@
           }
         }
     },
-      "/requisition/{id}": {
+    "/requisition/{id}": {
         "get": {
           "tags": [
             "Requisition"
@@ -1504,9 +1504,450 @@
             "description": "Date when the sample was received by the lab"
           }
         }
+    },
+    "/panels": {
+      "get": {
+        "tags": [
+          "Panel"
+        ],
+        "summary": "Get all panels",
+        "description": "Returns a list of all panels",
+        "responses": {
+          "200": {
+            "description": "A list of panels",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Panel"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Panel"
+        ],
+        "summary": "Create a panel",
+        "description": "Creates a new panel",
+        "parameters": [
+          {
+            "name": "panel",
+            "in": "body",
+            "description": "Panel object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PanelInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The created panel",
+            "schema": {
+              "$ref": "#/definitions/Panel"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/panels/{id}": {
+      "get": {
+        "tags": [
+          "Panel"
+        ],
+        "summary": "Get a panel by ID",
+        "description": "Returns a panel with the specified ID",
+        "parameters": [
+          {
+            "name": "panelId",
+            "in": "path",
+            "description": "ID of the panel",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested panel",
+            "schema": {
+              "$ref": "#/definitions/Panel"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Panel"
+        ],
+        "summary": "Update a panel",
+        "description": "Updates an existing panel with the specified ID",
+        "parameters": [
+          {
+            "name": "panelId",
+            "in": "path",
+            "description": "ID of the panel",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "panel",
+            "in": "body",
+            "description": "Panel object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PanelInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated panel",
+            "schema": {
+              "$ref": "#/definitions/Panel"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+    "delete": {
+      "tags": [
+        "Panel"
+      ],
+      "summary": "Delete panel by ID",
+      "description": "",
+      "operationId": "deletePanel",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "ID of panel to delete",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "Panel deleted successfully"
+        },
+        "404": {
+          "description": "Panel not found"
+        }
+      }
+    }  
+    },
+    "/sample": {
+      "get": {
+        "tags": [
+          "Sample"
+        ],
+        "summary": "Get a list of all samples",
+        "description": "Returns a list of all panels",
+        "responses": {
+          "200": {
+            "description": "A list of panels",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Sample"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sample"
+        ],
+        "summary": "Create a new sample",
+        "description": "",
+        "operationId": "createSample",
+        "requestBody": {
+          "description": "Sample object to be created",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sample"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sample created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sample"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          }
+        }
+      }
+    },
+    "/sample/{id}": {
+      "get": {
+        "tags": [
+          "Sample"
+        ],
+        "summary": "Get sample by ID",
+        "description": "",
+        "operationId": "getSampleById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of sample to get",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sample retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sample"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sample not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Sample"
+        ],
+        "summary": "Update sample by ID",
+        "description": "",
+        "operationId": "updateSample",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of sample to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Sample object to be updated",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sample"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sample updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sample"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "404": {
+            "description": "Sample not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Sample"
+        ],
+        "summary": "Deletes a Sample",
+        "description": "Delete a Sample by ID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Sample to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sample successfully deleted"
+          },
+          "404": {
+            "description": "Sample not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/dispatch-history": {
+      "post": {
+        "tags": [
+          "Dispatch History"
+        ],
+        "summary": "Create a new Dispatch History",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dispatch_history",
+            "in": "body",
+            "description": "Dispatch History object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DispatchHistoryInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Dispatch History created",
+            "schema": {
+              "$ref": "#/definitions/DispatchHistory"
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/dispatch-history/{id}": {
+      "get": {
+        "tags": [
+          "Dispatch History"
+        ],
+        "summary": "Retrieve a Dispatch History by ID",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Dispatch History to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dispatch History found",
+            "schema": {
+              "$ref": "#/definitions/DispatchHistory"
+            }
+          },
+          "404": {
+            "description": "Dispatch History not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Dispatch History"
+        ],
+        "summary": "Delete a Dispatch History by ID",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Dispatch History to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Dispatch History successfully deleted"
+          },
+          "404": {
+            "description": "Dispatch History not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
     }
-  } 
-}         
+  }
+} 
+
+
+  
+
+ 
+
 
 
 
