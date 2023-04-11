@@ -45,7 +45,7 @@ const siteRoutes = require('./routes/site');
 const teamRoutes = require('./routes/team');
 
 //Swagger Docs
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 // Use routes in the app
