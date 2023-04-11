@@ -2,12 +2,12 @@ const Site = require('../models/site');
 
 // Define controller methods for site
 exports.getAll = async (req, res) => {
-  const sites = await Site.find();
+  const sites = await Site.find().populate([{path: 'client'}, { path: 'team' }]);
   res.json(sites);
 };
 
 exports.getById = async (req, res) => {
-  const site = await Site.findById(req.params.id);
+  const site = await Site.findById(req.params.id).populate([{path: 'client'}, { path: 'team' }]);;
   res.json(site);
 };
 

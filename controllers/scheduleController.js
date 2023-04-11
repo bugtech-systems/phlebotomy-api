@@ -2,12 +2,12 @@ const PhlebotomySchedule = require('../models/schedule');
 
 // Define controller methods for phlebotomy schedule
 exports.getAll = async (req, res) => {
-  const phlebotomySchedules = await PhlebotomySchedule.find();
+  const phlebotomySchedules = await PhlebotomySchedule.find().populate([{path: 'phlebotomist'}, { path: 'site' }]);
   res.json(phlebotomySchedules);
 };
 
 exports.getById = async (req, res) => {
-  const phlebotomySchedule = await PhlebotomySchedule.findById(req.params.id);
+  const phlebotomySchedule = await PhlebotomySchedule.findById(req.params.id).populate([{path: 'phlebotomist'}, { path: 'site' }]);;
   res.json(phlebotomySchedule);
 };
 
