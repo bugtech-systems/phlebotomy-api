@@ -36,10 +36,30 @@
     {
       "name": "Patients",
       "description": "APIs for managing patients"
+    },
+    {
+      "name": "Clients",
+      "description": "APIs for managing clients"
+    },
+    {
+      "name": "Panels",
+      "description": "APIs for managing panels"
+    },
+    {
+      "name": "Requisitions",
+      "description": "APIs for managing requisitions"
+    },
+    {
+      "name": "Dispatch_history",
+      "description": "APIs for managing dispatch history"
+    },
+    {
+      "name": "Samples",
+      "description": "APIs for managing samples"
     }
   ],
   "definitions": {
-    "Phlebotomist": {
+    "Phlebotomists": {
       "type": "object",
       "properties": {
         "_id": {
@@ -62,7 +82,7 @@
           "description": "The last name of the phlebotomist",
           "example": "Doe"
         },
-        "team_id": {
+        "team": {
           "type": "string",
           "description": "The ID of the team the phlebotomist is assigned to",
           "example": "6177f2a56b63c7c26140723d"
@@ -72,7 +92,7 @@
           "description": "The starting address of the phlebotomist",
           "example": "123 Main St, Anytown USA"
         },
-        "starting_time": {
+        "start_time": {
           "type": "string",
           "description": "The start time of the phlebotomist's shift",
           "format": "date-time",
@@ -89,11 +109,12 @@
           "example": "#FF5733"
         }
       }
+      
     },
-    "Schedule": {
+    "Schedules": {
       "type": "object",
       "properties": {
-        "schedule_id": {
+        "_id": {
           "type": "string",
           "description": "The unique ID of the schedule",
           "example": "609da15eec7413470e509a84"
@@ -103,15 +124,15 @@
           "description": "The status of the schedule",
           "example": "Booked"
         },
-        "phlebotomist_id": {
+        "phlebotomist": {
           "type": "string",
           "description": "The ID of the phlebotomist assigned to the schedule",
-          "example": "6177f2a56b63c7c26140723d"
+          "example": "609da15eec7413470e509a77"
         },
-        "site_id": {
+        "site": {
           "type": "string",
           "description": "The ID of the site the phlebotomy schedule is for",
-          "example": "6177f2a56b63c7c26140723d"
+          "example": "6437f3decb03f46b75943be0"
         },
         "weekday": {
           "type": "string",
@@ -120,18 +141,12 @@
         }
       }
     },
-    "Site": {
+    "Sites": {
       "type": "object",
       "properties": {
-        "site_id": {
-          "type": "string",
-          "description": "The unique ID of the site",
-          "example": "SITE001"
-        },
         "name": {
           "type": "string",
           "description": "The name of the site",
-          "$ref": "#/definitions/Site",
           "example": "ABC Hospital"
         },
         "client_id": {
@@ -156,7 +171,7 @@
         }
       }
     },
-    "Team": {
+    "Teams": {
       "type": "object",
       "properties": {
         "team_id": {
@@ -182,14 +197,13 @@
         ]
       }    
     },
-    "Patient": {
+    "Patients": {
       "type": "object",
       "properties": {
-        "patient_id": {
+        "_id": {
           "type": "string",
           "description": "The unique ID of the patient",
-          "example": "PATIENT0123",
-          "$ref": "#/definitions/Patient"
+          "example": "643807d06d8ef1c1dd458c97"
         },
         "first_name": {
           "type": "string",
@@ -201,10 +215,10 @@
           "description": "The last name of the patient",
           "example": "Deene"
         },
-        "site_id": {
+        "site": {
           "type": "string",
           "description": "The unique ID of the patient's scheduled site",
-          "example": "SITE001"
+          "example": "6437f1fbf293dd1f0f9afe3e"
         },
         "address": {
           "type": "string",
@@ -218,7 +232,7 @@
         }
       }
     },
-    "Client": {
+    "Clients": {
       "type": "object",
       "properties": {
         "_id": {
@@ -229,47 +243,47 @@
         "name": {
           "type": "string",
           "description": "The name of the client",
-          "example": "ABC Healthcare"
+          "example": "Hospital ABC"
         }
       }
     },
-    "Requisition": {
+    "Requisitions": {
       "type": "object",
       "properties": {
-        "requisition_id": {
+        "_id": {
           "type": "string",
-          "description": "The unique ID of the requisition",
-          "example": "610da15aab7413470e509a92"
+          "description": "The unique ID of the client",
+          "example": "643811ae57cbe41c0266ce0e"
         },
         "status": {
           "type": "string",
           "description": "The status of the requisition",
-          "example": "Processed"
+          "example": "Received"
         },
-        "patient_id": {
+        "patient": {
           "type": "string",
           "description": "The unique ID of the patient",
-          "example": "PATIENT0123"
+          "example": "643807946d8ef1c1dd458c93"
         },
         "collection_date": {
-          "type": "date-time",
+          "type": "date",
           "description": "The date of collection of the sample",
           "example": "03/10/2023"
         },
         "received_date": {
-          "type": "date-time",
+          "type": "date",
           "description": "The date the requisition was received",
           "example": "03/08/2023"
         },
         "provider": {
-          "type": "date-time",
+          "type": "string",
           "description": "The details of the provider",
-          "example": "03/08/2023"
+          "example": "Provider001"
         },
-        "site_id": {
+        "site": {
           "type": "string",
           "description": "The unique ID of the requisition site",
-          "example": "SITE001"
+          "example": "6437f21af293dd1f0f9afe41"
         },
         "comment": {
           "type": "string",
@@ -281,17 +295,17 @@
           "description": "The phlebotomist's comment pertaining to the requisition",
           "example": "This is urgent"
         },
-        "panel_id": {
+        "panel": {
           "type": "string",
           "description": "The unique ID of the panel for the requisition",
           "example": "771da15ddc7413470e509a33"
         }
       }
     },
-    "Sample": {
+    "Samples": {
       "type": "object",
       "properties": {
-        "sample_id": {
+        "_id": {
           "type": "string",
           "description": "The unique ID of the sample",
           "example": "610da15aab7413470e509b88"
@@ -306,13 +320,13 @@
           "description": "The status of the sample",
           "example": "normal without findings"
         },
-        "requisition_id": {
+        "requisition": {
           "type": "string",
           "description": "The unique ID of the sample requisition",
           "example": "710da15aab7413470e509a923"
         },
         "collection_date": {
-          "type": "date-time",
+          "type": "date",
           "description": "The date of collection of the sample",
           "example": "03/10/2023"
         },
@@ -333,37 +347,37 @@
         }
       }
     },
-    "Dispatch History": {
+    "Dispatch_history": {
       "type": "object",
       "properties": {
-        "id": {
+        "_id": {
           "type": "string",
           "description": "The unique ID of the requisition",
           "example": "610da15aab7413470e509a92"
         },
         "date": {
-          "type": "date-time",
+          "type": "date",
           "description": "The date of dispatch",
           "example": "03/25/2023"
         },
-        "phlebotomist_id": {
+        "phlebotomist": {
           "type": "string",
           "description": "The ID of the phlebotomist in charge of dispatch",
-          "example": "6177f2a56b63c7c26140723d"
+          "example": "609da15eec7413470e509a77"
         },
-        "requisition_id": {
+        "requisition": {
           "type": "string",
           "description": "The unique ID of the dispatched requisition",
-          "example": "610da15aab7413470e509a92"
+          "example": "643811a857cbe41c0266ce0c"
         },
         "attempt_made": {
-          "type": "string",
+          "type": "boolean",
           "description": "The details of attempt",
-          "example": "attempt1"
+          "example": "true"
         }  
       }
     },
-    "Panel": {
+    "Panels": {
       "type": "object",
       "properties": {
         "panel_id": {
@@ -383,20 +397,17 @@
     "/phlebotomists": {
       "get": {
         "tags": [
-          "Phlebotomist"
-        ],
+          "Phlebotomists"
+         ],
         "summary": "Get all phlebotomists",
         "description": "Returns a list of all phlebotomists in the database",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "An array of phlebotomists",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Phlebotomist"
+                "$ref": "#/definitions/Phlebotomists"
               }
             }
           },
@@ -407,28 +418,25 @@
       },
       "post": {
         "tags": [
-          "Phlebotomist"
+          "Phlebotomists"
         ],
         "summary": "Create a new phlebotomist",
         "description": "Creates a new phlebotomist in the database",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
-            "name": "Phlebotomist",
+            "name": "Phlebotomists",
             "in": "body",
-            "description": "Phlebotomist object to be added to the database",
+            "description": "Phlebotomists object to be added to the database",
             "schema": {
-              "$ref": "#/definitions/Phlebotomist"
+              "$ref": "#/definitions/Phlebotomists"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Phlebotomist created successfully",
+            "description": "Phlebotomists created successfully",
             "schema": {
-              "$ref": "#/definitions/Phlebotomist"
+              "$ref": "#/definitions/Phlebotomists"
             }
           },
           "400": {
@@ -443,18 +451,14 @@
     "/phlebotomists/{id}": {
       "get": {
         "tags": [
-          "Phlebotomist"
+          "Phlebotomists"
         ],
         "summary": "Get a phlebotomist by ID",
         "description": "Returns a phlebotomist with the specified ID",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "default": "6432549b0d9d34ae72c7b84f",
             "description": "ID of the phlebotomist to retrieve",
             "required": true,
             "type": "string"
@@ -462,13 +466,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Phlebotomist object",
+            "description": "Phlebotomists object",
             "schema": {
-              "$ref": "#/definitions/Phlebotomist"
+              "$ref": "#/definitions/Phlebotomists"
             }
           },
           "404": {
-            "description": "Phlebotomist not found"
+            "description": "Phlebotomists not found"
           },
           "500": {
             "description": "Internal server error"
@@ -477,7 +481,7 @@
       },
       "put": {
         "tags": [
-          "Phlebotomist"
+          "Phlebotomists"
         ],
         "summary": "Update phlebotomist by ID",
         "description": "Updates phlebotomist in the database by ID",
@@ -494,19 +498,19 @@
             "type": "string"
           },
           {
-            "name": "Phlebotomist",
+            "name": "Phlebotomists",
             "in": "body",
-            "description": "Phlebotomist object to be updated to the database",
+            "description": "Phlebotomists object to be updated to the database",
             "schema": {
-              "$ref": "#/definitions/Phlebotomist"
+              "$ref": "#/definitions/Phlebotomists"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Phlebotomist created successfully",
+            "description": "Phlebotomists created successfully",
             "schema": {
-              "$ref": "#/definitions/Phlebotomist"
+              "$ref": "#/definitions/Phlebotomists"
             }
           },
           "400": {
@@ -519,7 +523,7 @@
       },
       "delete": {
         "tags": [
-          "Phlebotomist"
+          "Phlebotomists"
         ],
         "summary": "Delete phlebotomist by ID",
         "description": "Delete phlebotomist in the database by ID",
@@ -530,7 +534,7 @@
           {
             "name": "id",
             "in": "path",
-            "default": "6432549b0d9d34ae72c7b84f",
+            "default": "609da15eec7413470e509a77",
             "description": "ID of the phlebotomist to retrieve",
             "required": true,
             "type": "string"
@@ -538,9 +542,9 @@
         ],
         "responses": {
           "201": {
-            "description": "Phlebotomist deleted successfully",
+            "description": "Phlebotomists deleted successfully",
             "schema": {
-              "$ref": "#/definitions/Phlebotomist"
+              "$ref": "#/definitions/Phlebotomists"
             }
           },
           "400": {
@@ -552,23 +556,20 @@
         }
       }
     },
-    "/phlebotomist-schedules": {
+    "/schedules": {
       "get": {
         "summary": "Get all Phlebotomist Schedules",
         "description": "Retrieve a list of all Phlebotomist Schedules",
         "tags": [
-          "Phlebotomy_schedule"
-        ],
-        "produces": [
-          "application/json"
+          "Schedules"
         ],
         "responses": {
           "200": {
-            "description": "Successful response with a list of Phlebotomist Schedules",
+            "description": "Successful response with a list of all Phlebotomist Schedules",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/PhlebotomySchedule"
+                "$ref": "#/definitions/Schedules"
               }
             }
           },
@@ -579,21 +580,18 @@
       },
       "post": {
         "summary": "Create a Phlebotomist Schedule",
-        "description": "Create a new Phlebotomist Schedule",
+        "description": "Create a new Phlebotomists Schedule",
         "tags": [
-          "Phlebotomy_schedule"
-        ],
-        "produces": [
-          "application/json"
+          "Schedules"
         ],
         "parameters": [
           {
-            "name": "PhlebotomistSchedule",
+            "name": "id",
             "in": "body",
             "description": "Phlebotomist Schedule object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PhlebotomySchedule"
+              "$ref": "#/definitions/Schedules"
             }
           }
         ],
@@ -601,7 +599,7 @@
           "201": {
             "description": "Successful response with the created Phlebotomist Schedule object",
             "schema": {
-              "$ref": "#/definitions/PhlebotomySchedule"
+              "$ref": "#/definitions/Schedules"
             }
           },
           "400": {
@@ -613,21 +611,18 @@
         }
       }
     },
-    "/phlebotomist-schedules/{id}": {
+    "/schedules/{id}": {
       "get": {
         "summary": "Get a Phlebotomist Schedule by ID",
-        "description": "Retrieve a Phlebotomist Schedule by its ID",
+        "description": "Retrieve a Phlebotomists Schedule by its ID",
         "tags": [
-          "Phlebotomy_schedule"
-        ],
-        "produces": [
-          "application/json"
+          "Schedules"
         ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Phlebotomist Schedule ID",
+            "description": "A Phlebotomist Schedule ID",
             "required": true,
             "type": "string"
           }
@@ -636,7 +631,7 @@
           "200": {
             "description": "Successful response with the requested Phlebotomist Schedule object",
             "schema": {
-              "$ref": "#/definitions/PhlebotomistSchedule"
+              "$ref": "#/definitions/Schedules"
             }
           },
           "404": {
@@ -648,34 +643,36 @@
         }
       },
       "put": {
-          "summary": "Update a phlebotomy schedule by ID",
+          "summary": "Update a phlebotomist schedule by ID",
           "description": "Updates a phlebotomy schedule using the provided ID",
           "tags": [
-            "Phlebotomy_schedule"
+            "Schedules"
           ],
           "parameters": [
             {
               "name": "id",
               "in": "path",
-              "description": "ID of the phlebotomy schedule to update",
+              "description": "ID of the phlebotomist schedule to update",
               "required": true,
               "type": "string"
             },
             {
-              "name": "PhlebotomistSchedule",
+            "name": "id",
               "in": "body",
-              "description": "Phlebotomist object to be updated to the database",
               "schema": {
-                "$ref": "#/definitions/PhlebotomySchedule"
-              }
-            }
+              "$ref": "#/definitions/Schedules"
+              },
+              "description": "Dettails of the phlebotomist schedule to update",
+              "required": true,
+              "type": "string"         
+            }  
           ],
           "responses": {
             "200": {
-              "description": "Phlebotomy schedule updated successfully"
+              "description": "Phlebotomist schedule updated successfully"
             },
             "404": {
-              "description": "Phlebotomy schedule not found"
+              "description": "Phlebotomist schedule not found"
             },
             "500": {
               "description": "Internal server error"
@@ -686,7 +683,7 @@
           "summary": "Delete a phlebotomy schedule by ID",
           "description": "Deletes a phlebotomy schedule using the provided ID",
           "tags": [
-            "Phlebotomy_schedule"
+            "Schedules"
           ],
           "parameters": [
             {
@@ -714,7 +711,7 @@
             "get": {
             "summary": "Get a list of all teams",
             "tags": [
-              "Team"
+              "Teams"
             ],
             "responses": {
               "200": {
@@ -733,7 +730,7 @@
           },
           "post": {
             "tags": [
-              "Team"
+              "Teams"
             ],
             "summary": "Create a new team",
             "parameters": [
@@ -742,12 +739,12 @@
                 "in": "body",
                 "required": true,
                 "schema": {
-                  "$ref": "#/definitions/TeamInput"
+                  "$ref": "#/definitions/Teams"
                 }
               }
             ],
             "responses": {
-              "201": {
+              "200": {
                 "description": "Team created successfully"
               },
               "400": {
@@ -763,11 +760,11 @@
           "get": {
             "summary": "Get a team by ID",
             "tags": [
-              "Team"
+              "Teams"
             ],
             "parameters": [
               {
-                "name": "teamId",
+                "name": "id",
                 "in": "path",
                 "required": true,
                 "type": "string"
@@ -777,7 +774,7 @@
               "200": {
                 "description": "Successful operation",
                 "schema": {
-                  "$ref": "#/definitions/TeamOutput"
+                  "$ref": "#/definitions/Teams"
                 }
               },
               "404": {
@@ -791,21 +788,21 @@
           "put": {
             "summary": "Update a team by ID",
             "tags": [
-              "Team"
+              "Teams"
             ],
             "parameters": [
               {
-                "name": "teamId",
+                "name": "id",
                 "in": "path",
                 "required": true,
                 "type": "string"
               },
               {
-                "name": "body",
+                "name": "teams",
                 "in": "body",
                 "required": true,
                 "schema": {
-                  "$ref": "#/definitions/TeamInput"
+                  "$ref": "#/definitions/Teams"
                 }
               }
             ],
@@ -827,11 +824,11 @@
           "delete": {
             "summary": "Delete a team by ID",
             "tags": [
-              "Team"
+              "Teams"
             ],
             "parameters": [
               {
-                "name": "teamId",
+                "name": "id",
                 "in": "path",
                 "required": true,
                 "type": "string"
@@ -854,10 +851,7 @@
       "get": {
         "summary": "Retrieve a list of all sites",
         "tags": [
-          "Site"
-        ],
-        "produces": [
-          "application/json"
+          "Sites"
         ],
         "responses": {
           "200": {
@@ -865,7 +859,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Site"
+                "$ref": "#/definitions/Sites"
               }
             }
           },
@@ -877,19 +871,16 @@
       "post": {
         "summary": "Create a new site",
         "tags": [
-          "Site"
-        ],
-        "consumes": [
-          "application/json"
+          "Sites"
         ],
         "parameters": [
           {
             "in": "body",
-            "name": "site",
+            "name": "id",
             "description": "Site object to be created",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/SiteInput"
+              "$ref": "#/definitions/Sites"
             }
           }
         ],
@@ -897,7 +888,7 @@
           "201": {
             "description": "The created site object",
             "schema": {
-              "$ref": "#/definitions/Site"
+              "$ref": "#/definitions/Sites"
             }
           },
           "400": {
@@ -910,15 +901,12 @@
       "get": {
         "summary": "Retrieve a site by ID",
         "tags": [
-          "Site"
-        ],
-        "produces": [
-          "application/json"
+          "Sites"
         ],
         "parameters": [
           {
             "in": "path",
-            "name": "siteId",
+            "name": "id",
             "description": "ID of the site to retrieve",
             "required": true,
             "type": "string"
@@ -928,7 +916,7 @@
           "200": {
             "description": "The site object",
             "schema": {
-              "$ref": "#/definitions/Site"
+              "$ref": "#/definitions/Sites"
             }
           },
           "404": {
@@ -939,26 +927,23 @@
       "put": {
         "summary": "Update a site by ID",
         "tags": [
-          "Site"
-        ],
-        "consumes": [
-          "application/json"
+          "Sites"
         ],
         "parameters": [
           {
             "in": "path",
-            "name": "siteId",
+            "name": "id",
             "description": "ID of the site to update",
             "required": true,
             "type": "string"
           },
           {
             "in": "body",
-            "name": "site",
+            "name": "id",
             "description": "Site object to be updated",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/SiteInput"
+              "$ref": "#/definitions/Sites"
             }
           }
         ],
@@ -966,7 +951,7 @@
           "200": {
             "description": "The updated site object",
             "schema": {
-              "$ref": "#/definitions/Site"
+              "$ref": "#/definitions/Sites"
             }
           },
           "400": {
@@ -980,12 +965,12 @@
       "delete": {
         "summary": "Delete a site by ID",
         "tags": [
-          "Site"
+          "Sites"
         ],
         "parameters": [
           {
             "in": "path",
-            "name": "siteId",
+            "name": "id",
             "description": "ID of the site to delete",
             "required": true,
             "type": "string"
@@ -1005,7 +990,7 @@
       "get": {
         "summary": "Get all clients",
         "tags": [
-          "Client"
+          "Clients"
         ],
         "description": "Returns a list of all clients",
         "responses": {
@@ -1014,7 +999,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Client"
+                "$ref": "#/definitions/Clients"
               }
             }
           },
@@ -1029,17 +1014,17 @@
       "post": {
         "summary": "Create a new client",
         "tags": [
-          "Client"
+          "Clients"
         ],
         "description": "Creates a new client",
         "parameters": [
           {
-            "name": "client",
+            "name": "Client",
             "in": "body",
             "description": "Client object to be created",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ClientInput"
+              "$ref": "#/definitions/Clients"
             }
           }
         ],
@@ -1047,7 +1032,7 @@
           "201": {
             "description": "Client created successfully",
             "schema": {
-              "$ref": "#/definitions/Client"
+              "$ref": "#/definitions/Clients"
             }
           },
           "400": {
@@ -1063,7 +1048,7 @@
       "get": {
         "summary": "Get client by ID",
         "tags": [
-          "Client"
+          "Clients"
         ],
         "description": "Returns a client object by ID",
         "parameters": [
@@ -1077,26 +1062,23 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "The retrieved client object",
             "schema": {
-              "$ref": "#/definitions/Client"
+              "$ref": "#/definitions/Clients"
             }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Invalid input"
           },
           "404": {
             "description": "Client not found"
-          },
-          "500": {
-            "description": "Internal server error"
           }
         }
       },
       "put": {
         "summary": "Update client by ID",
         "tags": [
-          "Client"
+          "Clients"
         ],
         "description": "Updates a client object by ID",
         "parameters": [
@@ -1110,10 +1092,10 @@
           {
             "name": "client",
             "in": "body",
-            "description": "Updated client object",
+            "description": "The updated client object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ClientInput"
+              "$ref": "#/definitions/Clients"
             }
           }
         ],
@@ -1121,7 +1103,7 @@
           "200": {
             "description": "Client updated successfully",
             "schema": {
-              "$ref": "#/definitions/Client"
+              "$ref": "#/definitions/Clients"
             }
           },
           "400": {
@@ -1138,7 +1120,7 @@
       "delete": {
         "summary": "Delete client by ID",
         "tags": [
-          "Client"
+          "Clients"
         ],
         "description": "Deletes a client object by ID",
         "parameters": [
@@ -1149,13 +1131,21 @@
             "required": true,
             "type": "string"
           }
-        ]
+        ],
+        "responses": {
+          "204": {
+            "description": "Client deleted"
+          },
+          "404": {
+            "description": "Client not found"
+          }
+        }
       }
     },
-    "/patient": {
+    "/patients": {
       "get": {
         "tags": [
-          "Patient"
+          "Patients"
         ],
         "summary": "List all patients",
         "responses": {
@@ -1164,7 +1154,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Patient"
+                "$ref": "#/definitions/Patients"
               }
             }
           }
@@ -1172,7 +1162,7 @@
       },
       "post": {
         "tags": [
-          "Patient"
+          "Patients"
         ],
         "summary": "Create a new patient",
         "parameters": [
@@ -1182,7 +1172,7 @@
             "description": "Patient object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PatientInput"
+              "$ref": "#/definitions/Patients"
             }
           }
         ],
@@ -1190,7 +1180,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Patient"
+              "$ref": "#/definitions/Patients"
             }
           },
           "400": {
@@ -1211,7 +1201,7 @@
     "/patients/{id}": {
       "get": {
         "tags": [
-          "Patient"
+          "Patients"
         ],
         "summary": "Get a patient by ID",
         "parameters": [
@@ -1227,7 +1217,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Patient"
+              "$ref": "#/definitions/Patients"
             }
           },
           "404": {
@@ -1237,7 +1227,7 @@
       },
       "put": {
         "tags": [
-          "Patient"
+          "Patients"
         ],
         "summary": "Update a patient",
         "parameters": [
@@ -1254,7 +1244,7 @@
             "description": "Patient object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PatientInput"
+              "$ref": "#/definitions/Patients"
             }
           }
         ],
@@ -1262,7 +1252,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Patient"
+              "$ref": "#/definitions/Patients"
             }
           },
           "400": {
@@ -1283,38 +1273,46 @@
         }
       },
       "delete": {
-        "summary": "Delete client by ID",
         "tags": [
-          "Patient"
-        ],
-        "description": "Deletes a patient object by ID",
-        "parameters": [
+          "Patients"
+          ],
+        "summary": "Deletes a patient",
+        "description": "Deletes a patient based on the specified client ID",
+        "parameters": [ 
           {
             "name": "id",
             "in": "path",
-            "description": "ID of the patient to delete",
+            "description": "ID of the patient to update",
             "required": true,
             "type": "string"
           }
-        ]
-      }
+        ],
+        "responses": {
+          "204": {
+              "description": "Patient deleted successfully"
+            },
+         "404": {
+              "description": "Patient not found"
+            },
+          "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
     },  
-    "/requisition": {
+    "/requisitions": {
         "get": {
           "tags": [
-            "Requisition"
+            "Requisitions"
           ],
           "summary": "Get all requisitions",
-          "produces": [
-            "application/json"
-          ],
           "responses": {
             "200": {
-              "description": "Returns a list of all requisitions",
+              "description": "Return a list of all requisitions",
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/Requisition"
+                  "$ref": "#/definitions/Requisitions"
                 }
               }
             },
@@ -1325,7 +1323,7 @@
         },
         "post": {
           "tags": [
-            "Requisition"
+            "Requisitions"
           ],
           "summary": "Create a new requisition",
           "consumes": [
@@ -1341,7 +1339,7 @@
               "description": "Requisition object to be created",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/Requisition"
+                "$ref": "#/definitions/Requisitions"
               }
             }
           ],
@@ -1349,7 +1347,7 @@
             "201": {
               "description": "Requisition created successfully",
               "schema": {
-                "$ref": "#/definitions/Requisition"
+                "$ref": "#/definitions/Requisitions"
               }
             },
             "400": {
@@ -1361,10 +1359,10 @@
           }
         }
     },
-    "/requisition/{id}": {
+    "/requisitions/{id}": {
         "get": {
           "tags": [
-            "Requisition"
+            "Requisitions"
           ],
           "summary": "Get a requisition by ID",
           "produces": [
@@ -1372,8 +1370,8 @@
           ],
           "parameters": [
             {
-              "in": "path",
               "name": "id",
+              "in": "path",
               "description": "ID of the requisition to be retrieved",
               "required": true,
               "type": "string"
@@ -1383,7 +1381,7 @@
             "200": {
               "description": "Returns the requisition with the specified ID",
               "schema": {
-                "$ref": "#/definitions/Requisition"
+                "$ref": "#/definitions/Requisitions"
               }
             },
             "404": {
@@ -1396,25 +1394,28 @@
         },
         "put": {
           "tags": [
-            "Requisition"
+            "Requisitions"
           ],
           "summary": "Update an existing requisition",
           "description": "Updates an existing requisition with the provided ID.",
           "operationId": "updateRequisition",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
           "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Requisition object to update",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Requisitions"
+              }
+            },
             {
               "name": "body",
               "in": "body",
               "description": "Requisition object to update",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/Requisition"
+                "$ref": "#/definitions/Requisitions"
               }
             }
           ],
@@ -1422,7 +1423,7 @@
             "200": {
               "description": "Successful update",
               "schema": {
-                "$ref": "#/definitions/Requisition"
+                "$ref": "#/definitions/Requisitions"
               }
             },
             "400": {
@@ -1438,13 +1439,20 @@
         },
         "delete": {
           "tags": [
-            "Requisition"
+            "Requisitions"
           ],
           "summary": "Delete an existing requisition",
           "description": "Deletes an existing requisition with the provided ID.",
-          "operationId": "deleteRequisition",
-          "produces": [
-            "application/json"
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "Requisition object to delete",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Requisitions"
+              }
+            }
           ],
           "responses": {
             "204": {
@@ -1484,7 +1492,7 @@
     "/panels": {
       "get": {
         "tags": [
-          "Panel"
+          "Panels"
         ],
         "summary": "Get all panels",
         "description": "Returns a list of all panels",
@@ -1494,21 +1502,15 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Panel"
+                "$ref": "#/definitions/Panels"
               }
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
             }
           }
         }
       },
       "post": {
         "tags": [
-          "Panel"
+          "Panels"
         ],
         "summary": "Create a panel",
         "description": "Creates a new panel",
@@ -1519,22 +1521,21 @@
             "description": "Panel object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PanelInput"
-            }
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Panels"
+              }
+             }
           }
         ],
         "responses": {
           "200": {
             "description": "The created panel",
             "schema": {
-              "$ref": "#/definitions/Panel"
+              "items": {
+              "$ref": "#/definitions/Panels"
             }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
+          }
           }
         }
       }
@@ -1542,15 +1543,15 @@
     "/panels/{id}": {
       "get": {
         "tags": [
-          "Panel"
+          "Panels"
         ],
         "summary": "Get a panel by ID",
         "description": "Returns a panel with the specified ID",
         "parameters": [
           {
-            "name": "panelId",
+            "name": "_id",
             "in": "path",
-            "description": "ID of the panel",
+            "description": "ID of the retrieved panel",
             "required": true,
             "type": "string"
           }
@@ -1559,26 +1560,23 @@
           "200": {
             "description": "The requested panel",
             "schema": {
-              "$ref": "#/definitions/Panel"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
+              "type": "array",
+              "items": {
+              "$ref": "#/definitions/Panels"
+              }
             }
           }
         }
       },
       "put": {
         "tags": [
-          "Panel"
+          "Panels"
         ],
         "summary": "Update a panel",
         "description": "Updates an existing panel with the specified ID",
         "parameters": [
           {
-            "name": "panelId",
+            "name": "_id",
             "in": "path",
             "description": "ID of the panel",
             "required": true,
@@ -1590,7 +1588,10 @@
             "description": "Panel object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PanelInput"
+              "type": "array",
+              "items": {
+              "$ref": "#/definitions/Panels"
+              }
             }
           }
         ],
@@ -1598,34 +1599,24 @@
           "200": {
             "description": "The updated panel",
             "schema": {
-              "$ref": "#/definitions/Panel"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/Panels"
             }
           }
         }
       },
     "delete": {
       "tags": [
-        "Panel"
+        "Panels"
       ],
       "summary": "Delete panel by ID",
-      "description": "",
-      "operationId": "deletePanel",
+      "description": "Delete a panel by ID",
       "parameters": [
         {
           "name": "id",
           "in": "path",
           "description": "ID of panel to delete",
           "required": true,
-          "schema": {
-            "type": "string",
-            "format": "uuid"
-          }
+          "type": "string"
         }
       ],
       "responses": {
@@ -1638,84 +1629,79 @@
       }
     }  
     },
-    "/sample": {
+    "/samples": {
       "get": {
         "tags": [
-          "Sample"
-        ],
+          "Samples"
+          ],
         "summary": "Get a list of all samples",
-        "description": "Returns a list of all panels",
-        "responses": {
+        "description": "Returns a list of all samples",
+        "responses": [
+        {
           "200": {
-            "description": "A list of panels",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Sample"
-              }
+          "description": "A list of samples",
+          "Schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Samples"
             }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
+           }
+         },
+         "500": {
+          "description": "Internal server error"
+         }
         }
-      },
-      "post": {
-        "tags": [
-          "Sample"
-        ],
-        "summary": "Create a new sample",
-        "description": "",
-        "operationId": "createSample",
-        "requestBody": {
-          "description": "Sample object to be created",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Sample"
+       ]
+       },
+       "post": {
+          "tags": [
+           "Samples"
+            ],
+          "summary": "Create a new sample",
+          "description": "Create a new sample",
+          "parameters": [
+            {
+            "in": "body",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Samples" 
+               }
               }
             }
-          }
-        },
-        "responses": {
+          ],
+         "responses": [
+          {
           "201": {
-            "description": "Sample created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Sample"
+             "description": "Sample created successfully",
+             "Schema": {
+              "items": {
+                "$ref": "#/definitions/Samples"
                 }
-              }
-            }
-          },
+             }
+            },
           "400": {
             "description": "Invalid input data"
+                }
           }
+          ]
         }
-      }
     },
-    "/sample/{id}": {
+    "/samples/{id}": {
       "get": {
         "tags": [
-          "Sample"
+          "Samples"
         ],
         "summary": "Get sample by ID",
-        "description": "",
-        "operationId": "getSampleById",
+        "description": "Get sample by ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "description": "ID of sample to get",
             "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
+            "type": "string"
           }
         ],
         "responses": {
@@ -1724,7 +1710,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Sample"
+                  "$ref": "#/definitions/Samples"
                 }
               }
             }
@@ -1736,45 +1722,37 @@
       },
       "put": {
         "tags": [
-          "Sample"
+          "Samples"
         ],
         "summary": "Update sample by ID",
-        "description": "",
-        "operationId": "updateSample",
+        "description": "Update sample for the given ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "description": "ID of sample to update",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "body",
+            "description": "ID of sample to update",
+            "required": true,
+            "type": "string",
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "$ref": "#/definitions/Samples"
             }
           }
         ],
-        "requestBody": {
-          "description": "Sample object to be updated",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Sample"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Sample updated successfully",
-            "content": {
-              "application/json": {
+            "type": "string",
                 "schema": {
-                  "$ref": "#/components/schemas/Sample"
+                  "$ref": "#/definitions/Samples"
                 }
-              }
-            }
-          },
+            },
           "400": {
             "description": "Invalid input data"
           },
@@ -1785,20 +1763,21 @@
       },
       "delete": {
         "tags": [
-          "Sample"
+          "Samples"
         ],
         "summary": "Deletes a Sample",
         "description": "Delete a Sample by ID",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "description": "ID of Sample to delete",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Samples"
+            }
           }
         ],
         "responses": {
@@ -1814,32 +1793,50 @@
         }
       }
     },
-    "/dispatch-history": {
+    "/dispatchHistories": {
+      "get": {
+        "tags": [
+          "Dispatch_history"
+         ],
+        "summary": "Get all Dispatch History entries",
+        "description": "Returns a list of all dispatch records in the database",
+        "responses": {
+          "200": {
+            "description": "An array of Dispatch records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Dispatch_history"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
       "post": {
         "tags": [
-          "Dispatch History"
+          "Dispatch_history"
         ],
         "summary": "Create a new Dispatch History",
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "description": "Create a new record for Dispatch",
         "parameters": [
           {
-            "name": "dispatch_history",
             "in": "body",
+            "name": "id",
             "description": "Dispatch History object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/DispatchHistoryInput"
-            }
+             "$ref": "#/definitions/Dispatch_history"
+          }
           }
         ],
         "responses": {
           "201": {
             "description": "Dispatch History created",
             "schema": {
-              "$ref": "#/definitions/DispatchHistory"
+              "$ref": "#/definitions/Dispatch_history"
             }
           },
           "400": {
@@ -1851,10 +1848,10 @@
         }
       }
     },
-    "/dispatch-history/{id}": {
+    "/dispatchHistories/{id}": {
       "get": {
         "tags": [
-          "Dispatch History"
+          "Dispatch_history"
         ],
         "summary": "Retrieve a Dispatch History by ID",
         "description": "",
@@ -1874,7 +1871,7 @@
           "200": {
             "description": "Dispatch History found",
             "schema": {
-              "$ref": "#/definitions/DispatchHistory"
+              "$ref": "#/definitions/Dispatch_history"
             }
           },
           "404": {
@@ -1885,9 +1882,53 @@
           }
         }
       },
+      "put": {
+        "tags": [
+          "Dispatch_history"
+        ],
+        "summary": "Update history by ID",
+        "description": "Update history for the given ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of history to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "body",
+            "description": "ID of history to update",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/Dispatch_history"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dispatch History updated successfully",
+            "type": "string",
+                "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Dispatch_history"
+                }
+                }
+            },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "404": {
+            "description": "Dispatch history not found"
+          }
+        }
+      },
       "delete": {
         "tags": [
-          "Dispatch History"
+          "Dispatch_history"
         ],
         "summary": "Delete a Dispatch History by ID",
         "description": "",
@@ -1905,20 +1946,19 @@
         ],
         "responses": {
           "204": {
-            "description": "Dispatch History successfully deleted"
+            "description": "Dispatch history successfully deleted"
           },
           "404": {
-            "description": "Dispatch History not found"
+            "description": "Dispatch history not found"
           },
           "500": {
-            "description": "Server error"
+            "description": "Dispatch history error"
           }
         }
       }
     }
   }
-} 
-
+}
 
   
 
