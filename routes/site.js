@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const siteController = require('../controllers/siteController');
+const uploadFile =  require('../middlewares/upload.js');
 
 // GET all sites
 router.get('/', siteController.getAll);
@@ -16,5 +17,10 @@ router.put('/:id', siteController.update);
 
 // DELETE a site
 router.delete('/:id', siteController.delete);
+
+
+router.post('/csv', uploadFile.single('file'), siteController.upload);
+
+
 
 module.exports = router;

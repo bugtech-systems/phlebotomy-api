@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const panelSchema = new Schema({
-              name: String,
+              name:  {
+                  type: String,
+                  unique: true
+                },
               // requisition: [{ type: Schema.Types.ObjectId, ref: 'Requisition' }]
   }, {
     timestamps: true

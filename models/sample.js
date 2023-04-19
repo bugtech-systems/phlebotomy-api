@@ -9,6 +9,10 @@ const sampleSchema = new Schema({
     type: String,
     method: String,
     container_type: String,
+    sample_id: {
+          type: Number,
+          unique: true
+     }
   }, {
     timestamps: true
 });

@@ -6,6 +6,10 @@ const scheduleSchema = new Schema({
       phlebotomist: { type: Schema.Types.ObjectId, ref: 'Phlebotomist' },
       site: { type: Schema.Types.ObjectId, ref: 'Site' },
       weekday: String,
+      schedule_id: {
+          type: Number,
+          unique: true
+     }
 }, {
       timestamps: true
 });

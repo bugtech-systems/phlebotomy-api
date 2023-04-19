@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const clientSchema = new Schema({
       name: String,
+      client_id: {
+          type: Number,
+          unique: true
+       }
       // site: [{ type: Schema.Types.ObjectId, ref: 'Site' }]
 }, {
       timestamps: true

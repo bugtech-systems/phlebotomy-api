@@ -1,4 +1,7 @@
 const Site = require('../models/site');
+const csvToJson = require('csvtojson');
+const path = require('path');
+
 
 // Define controller methods for site
 exports.getAll = async (req, res) => {
@@ -14,7 +17,7 @@ exports.getById = async (req, res) => {
 exports.create = async (req, res) => {
   const site = new Site(req.body);
   await site.save();
-  res.json(site);
+  res.json(site);  
 };
 
 exports.update = async (req, res) => {
@@ -25,4 +28,40 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   await Site.findByIdAndDelete(req.params.id);
   res.json({ message: 'Site deleted' });
+};
+
+
+exports.upload = async (req, res) => {
+  if (req.file == undefined) {
+    return res.status(400).send("Please upload a CSV file!");
+  }
+  const dir = path.join(process.env.UPLOAD_PATH, 'uploads') || '/uploads';
+  let csvData = [];
+  let csvPath = path.join(dir, req.file.filename);
+    
+    console.log(csvPath)
+    
+  const json = await csvToJson().fromFile(csvPath);
+
+  console.log(json)
+
+    for(let val of json){
+    console.log(val)
+      await Site.create(val)
+      .then(doc => {
+          // console.log(doc)
+        csvData.push(doc);
+      })
+      .catch(err => {
+      
+        // console.log(err)
+      })
+    }
+  
+    res.status(200).json({
+      m: "CSV Data",
+      d: csvData
+    })
+    
+
 };
