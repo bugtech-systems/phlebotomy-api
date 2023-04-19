@@ -62,7 +62,8 @@ app.use('/api/teams', teamRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5005;
-app.listen(PORT, () => {
+let server = app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
 
+server.setTimeout(500000);

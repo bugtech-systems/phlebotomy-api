@@ -15,10 +15,7 @@ const dispatchHistorySchema = new Schema({
             },
             requisition_id: {
               type: Number
-            },
-            dispatch_id: {
-                type: Number
-           }
+            }
   }, {
     timestamps: true
 });
