@@ -33,34 +33,36 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/phlebotomy-
 
 
 // Import route modules
-const clientRoutes = require('./routes/client');
-const patientRoutes = require('./routes/patient');
-const sampleRoutes = require('./routes/sample');
-const dispatchHistoryRoutes = require('./routes/dispatch_history');
-const panelRoutes = require('./routes/panel');
-const phlebotomistRoutes = require('./routes/phlebotomist');
-const scheduleRoutes = require('./routes/schedule');
-const siteRoutes = require('./routes/site');
-const teamRoutes = require('./routes/team');
-const requisitionRoutes = require('./routes/requisition');
+// const clientRoutes = require('./routes/client');
+// const patientRoutes = require('./routes/patient');
+// const sampleRoutes = require('./routes/sample');
+// const dispatchHistoryRoutes = require('./routes/dispatch_history');
+// const panelRoutes = require('./routes/panel');
+// const phlebotomistRoutes = require('./routes/phlebotomist');
+// const scheduleRoutes = require('./routes/schedule');
+// const siteRoutes = require('./routes/site');
+// const teamRoutes = require('./routes/team');
+// const requisitionRoutes = require('./routes/requisition');
 const ridRoutes = require('./routes/rid');
+// const itemsRoutes = require('./routes/items');
 
 //Swagger Docs
 app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 // Use routes in the app
-app.use('/api/clients', clientRoutes);
-app.use('/api/patients', patientRoutes);
-app.use('/api/requisitions', requisitionRoutes);
-app.use('/api/samples', sampleRoutes);
-app.use('/api/dispatchHistories', dispatchHistoryRoutes);
-app.use('/api/panels', panelRoutes);
-app.use('/api/phlebotomists', phlebotomistRoutes);
-app.use('/api/schedules', scheduleRoutes);
-app.use('/api/sites', siteRoutes);
-app.use('/api/teams', teamRoutes);
-app.use('/api/rid', ridRoutes);
+// app.use('/api/clients', clientRoutes);
+// app.use('/api/patients', patientRoutes);
+// app.use('/api/requisitions', requisitionRoutes);
+// app.use('/api/samples', sampleRoutes);
+// app.use('/api/dispatchHistories', dispatchHistoryRoutes);
+// app.use('/api/panels', panelRoutes);
+// app.use('/api/phlebotomists', phlebotomistRoutes);
+// app.use('/api/schedules', scheduleRoutes);
+// app.use('/api/sites', siteRoutes);
+// app.use('/api/teams', teamRoutes);
+app.use('/api/rids', ridRoutes);
+// app.use('/api/items', itemsRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5005;

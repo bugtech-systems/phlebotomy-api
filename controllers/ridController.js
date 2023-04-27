@@ -4,19 +4,19 @@ const path = require('path');
 
 
 exports.getAll = async (req, res) => {
-  const panels = await Rid.find();
-  res.json(panels);
+  const rids = await Rid.find();
+  res.json(rids);
 };
 
 exports.getById = async (req, res) => {
-  const panel = await Rid.findById(req.params.id);
-  res.json(panel);
+  const rid = await Rid.findById(req.params.id);
+  res.json(rid);
 };
 
 exports.create = async (req, res) => {
-  const panel = new Rid(req.body);
-  await panel.save();
-  res.json(panel);
+  const rid = new Rid(req.body);
+  await rid.save();
+  res.json(rid);
 };
 
 exports.update = async (req, res) => {

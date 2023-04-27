@@ -1,32 +1,32 @@
-const Requisition = require('../models/requisition');
+const Items = require('../models/items');
 const csvToJson = require('csvtojson');
 const path = require('path');
 
 
 exports.getAll = async (req, res) => {
-  const requisitions = await Requisition.find().populate([{path: 'patient', populate: {path: 'site' }}, { path: 'site' }]);;
-  res.json(requisitions);
+  const items = await Items.find();
+  res.json(items);
 };
 
 exports.getById = async (req, res) => {
-  const requisition = await Requisition.findById(req.params.id);
-  res.json(requisition);
+  const item = await Items.findById(req.params.id);
+  res.json(item);
 };
 
 exports.create = async (req, res) => {
-  const requisition = new Requisition(req.body);
-  await requisition.save();
-  res.json(requisition);
+  const item = new Items(req.body);
+  await item.save();
+  res.json(item);
 };
 
 exports.update = async (req, res) => {
-  await Requisition.findByIdAndUpdate(req.params.id, req.body);
-  res.json({ message: 'Requisition updated' });
+  await Items.findByIdAndUpdate(req.params.id, req.body);
+  res.json({ message: 'Items updated' });
 };
 
 exports.delete = async (req, res) => {
-  await Requisition.findByIdAndDelete(req.params.id);
-  res.json({ message: 'Requisition deleted' });
+  await Items.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Items deleted' });
 };
 
 
@@ -46,7 +46,7 @@ exports.upload = async (req, res) => {
 
     for(let val of json){
     console.log(val)
-      await Requisition.create(val)
+      await Items.create(val)
       .then(doc => {
           // console.log(doc)
         csvData.push(doc);
