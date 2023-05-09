@@ -13,10 +13,36 @@ exports.getById = async (req, res) => {
   res.json(rid);
 };
 
+exports.getByRid = async (req, res) => {
+  let { id } = req.params;
+  const requisition = await Rid.findOne({ rid: id });
+
+  if(!requisition) return res.status(404).json({m: "Requisition not found."})
+  
+  const { rid, dispatch_history: { collection_date, panels, samples, site, patient } } = requisition;
+  let newObj = {
+      rid,
+      collection_date, panels, samples,
+      site: site.name,
+      client: site.client.name,
+      first_name: patient.first_name,
+      last_name: patient.last_name,
+      date_of_birth: patient.date_of_birth
+  }
+  
+
+  res.status(200).json(newObj);
+};
+
 exports.create = async (req, res) => {
-  const rid = new Rid(req.body);
-  await rid.save();
-  res.json(rid);
+
+  let rid = await Rid.findOne({ rid: req.body.rid});
+
+  if(rid) return res.status(401).json({m: "Requisition ID already exist!"})
+
+  const newRid = new Rid(req.body);
+  await newRid.save();
+  res.json(newRid);
 };
 
 exports.update = async (req, res) => {
