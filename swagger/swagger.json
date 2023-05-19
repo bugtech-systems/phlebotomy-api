@@ -18,28 +18,12 @@
   ],
   "tags": [
     {
-      "name": "Phlebotomists",
-      "description": "APIs for managing phlebotomists"
-    },
-    {
-      "name": "Schedules",
-      "description": "APIs for managing phlebotomy schedules"
-    },
-    {
-      "name": "Sites",
-      "description": "APIs for managing sites"
-    },
-    {
-      "name": "Teams",
-      "description": "APIs for managing teams"
-    },
-    {
-      "name": "Patients",
-      "description": "APIs for managing patients"
+      "name": "Requistions",
+      "description": "APIs for managing requisition"
     }
   ],
   "definitions": {
-    "Phlebotomist": {
+    "Phlebotomists": {
       "type": "object",
       "properties": {
         "_id": {
@@ -90,7 +74,7 @@
         }
       }
     },
-    "Schedule": {
+    "Schedules": {
       "type": "object",
       "properties": {
         "schedule_id": {
@@ -120,7 +104,7 @@
         }
       }
     },
-    "Site": {
+    "Sites": {
       "type": "object",
       "properties": {
         "site_id": {
@@ -156,7 +140,7 @@
         }
       }
     },
-    "Team": {
+    "Teams": {
       "type": "object",
       "properties": {
         "team_id": {
@@ -182,7 +166,7 @@
         ]
       }    
     },
-    "Patient": {
+    "Patients": {
       "type": "object",
       "properties": {
         "patient_id": {
@@ -218,7 +202,7 @@
         }
       }
     },
-    "Client": {
+    "Clients": {
       "type": "object",
       "properties": {
         "_id": {
@@ -233,7 +217,7 @@
         }
       }
     },
-    "Requisition": {
+    "Requisitions": {
       "type": "object",
       "properties": {
         "requisition_id": {
@@ -288,7 +272,7 @@
         }
       }
     },
-    "Sample": {
+    "Samples": {
       "type": "object",
       "properties": {
         "sample_id": {
@@ -363,7 +347,7 @@
         }  
       }
     },
-    "Panel": {
+    "Panels": {
       "type": "object",
       "properties": {
         "panel_id": {
@@ -380,6 +364,178 @@
     }    
   },
   "paths": {
+    "/rids": {
+      "get": {
+        "tags": [
+          "Requistions"
+        ],
+        "summary": "Get all Requistions",
+        "description": "Returns a list of all Requistions in the database",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of phlebotomists",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Phlebotomist"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Requistions"
+        ],
+        "summary": "Create a new Requistions",
+        "description": "Creates a new Requistions in the database",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Phlebotomist",
+            "in": "body",
+            "description": "Phlebotomist object to be added to the database",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Phlebotomist created successfully",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          },
+          "400": {
+            "description": "Bad request, phlebotomist object not provided"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rids/{id}": {
+      "get": {
+        "tags": [
+          "Requistions"
+        ],
+        "summary": "Get a Requistions by ID",
+        "description": "Returns a Requistions with the specified ID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "default": "6432549b0d9d34ae72c7b84f",
+            "description": "ID of the phlebotomist to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Phlebotomist object",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          },
+          "404": {
+            "description": "Phlebotomist not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Requistions"
+        ],
+        "summary": "Update Requistions by ID",
+        "description": "Updates Requistions in the database by ID",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "default": "6432549b0d9d34ae72c7b84f",
+            "description": "ID of the phlebotomist to retrieve",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Phlebotomist",
+            "in": "body",
+            "description": "Phlebotomist object to be updated to the database",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Phlebotomist created successfully",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          },
+          "400": {
+            "description": "Bad request, phlebotomist object not provided"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Phlebotomist"
+        ],
+        "summary": "Delete phlebotomist by ID",
+        "description": "Delete phlebotomist in the database by ID",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "default": "6432549b0d9d34ae72c7b84f",
+            "description": "ID of the phlebotomist to retrieve",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Phlebotomist deleted successfully",
+            "schema": {
+              "$ref": "#/definitions/Phlebotomist"
+            }
+          },
+          "400": {
+            "description": "Bad request, phlebotomist object not provided"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/phlebotomists": {
       "get": {
         "tags": [
@@ -1152,7 +1308,7 @@
         ]
       }
     },
-    "/patient": {
+    "/patients": {
       "get": {
         "tags": [
           "Patient"
@@ -1638,7 +1794,7 @@
       }
     }  
     },
-    "/sample": {
+    "/samples": {
       "get": {
         "tags": [
           "Sample"
@@ -1698,7 +1854,7 @@
         }
       }
     },
-    "/sample/{id}": {
+    "/samples/{id}": {
       "get": {
         "tags": [
           "Sample"

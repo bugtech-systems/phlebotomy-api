@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -9,6 +9,7 @@ const SampleSchema = new Schema({
   container: { type: String },
   collection_date: { type: Date },
   collection_status: { type: String },
+  unsuccessful_reason: { type: String },
 });
 
 const PhlebotomistSchema = new Schema({
@@ -23,6 +24,7 @@ const SiteSchema = new Schema({
   name: { type: String },
   address: { type: String },
   type: { type: String },
+  phone: { type: String },
   client: {
     id: { type: Number },
     name: { type: String },
@@ -47,8 +49,10 @@ const DispatchHistorySchema = new Schema({
   collection_date: { type: Date, required: false },
   received_date: { type: Date, required: false },
   provider: { type: String },
+  venipuncture: { type: Boolean },
   requisition_comment: { type: String, required: false },
   phlebotomist_comment: { type: String, required: false },
+  test_priority: { type: String, required: false },
   panels: [{ type: String }],
   samples: [{ type: SampleSchema }],
   site: { type: SiteSchema },
@@ -59,31 +63,11 @@ const RequisitionSchema = new Schema({
   rid: { type: Number, required: true },
   status_change_date: { type: Date, required: false },
   dispatch_date: { type: Date, required: false },
-  phlebotomist_email: { type: String},
+  phlebotomist_email: { type: String },
   dispatch_status: { type: String },
   dispatch_history: { type: DispatchHistorySchema },
 });
 
-// RequisitionSchema.pre('save', { document: true, query: false }, async function (next) {
-//   const data = this;
-//   if (data.isNew) {
-//     let dispatch_history = data.dispatch_history ? data.dispatch_history : null;
-//       if(dispatch_history){
-//         let { scheduled_date, phlebotomist } = dispatch_history;
-//         if(scheduled_date) {
-//               data.dispatch_date = scheduled_date;
-//         }
-        
-//         if(phlebotomist && phlebotomist.user_email){
-//           data.phlebotomist_email = phlebotomist.user_email
-//         }
-//       }
-      
-//     next();
-//   }
-// });
-
-
-const Requisition = mongoose.model('rids', RequisitionSchema);
+const Requisition = mongoose.model("rids", RequisitionSchema);
 
 module.exports = Requisition;
