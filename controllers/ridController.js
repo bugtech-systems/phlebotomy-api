@@ -21,10 +21,14 @@ exports.getByRid = async (req, res) => {
 
   const {
     rid,
+    destination_status,
+    unsuccessful_reason,
     dispatch_history: { collection_date, panels, samples, site, patient },
   } = requisition;
   let newObj = {
     rid,
+    destination_status,
+    unsuccessful_reason,
     collection_date,
     panels,
     samples,
@@ -38,11 +42,32 @@ exports.getByRid = async (req, res) => {
   res.status(200).json(newObj);
 };
 
+exports.bulkCreate = async (req, res) => {
+  const data = req.body;
+
+  let newData = await Promise.all(
+    data.map(async (item) => {
+      let rid = await Rid.findOne({ rid: item.rid });
+      if (rid) return null;
+
+      let newObj = {
+        ...item,
+        dispatch_date: item.dispatch_history.scheduled_date,
+      };
+      const newRid = new Rid(newObj);
+      await newRid.save();
+      return newRid;
+    })
+  );
+  let finalData = newData.filter((a) => {
+    return a !== null;
+  });
+  res.json(finalData);
+};
+
 exports.create = async (req, res) => {
   let rid = await Rid.findOne({ rid: req.body.rid });
-
   if (rid) return res.status(401).json({ m: "Requisition ID already exist!" });
-
   const newRid = new Rid(req.body);
   await newRid.save();
   res.json(newRid);
@@ -51,6 +76,19 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
   await Rid.findByIdAndUpdate(req.params.id, req.body);
   res.json({ message: "Rid updated" });
+};
+
+exports.bulkDelete = async (req, res) => {
+  let data = req.body;
+  console.log(data);
+  let newData = await Promise.all(
+    data.map(async (id) => {
+      let rid = await Rid.findOneAndDelete({ rid: id });
+      return rid;
+    })
+  );
+
+  res.json(newData);
 };
 
 exports.delete = async (req, res) => {

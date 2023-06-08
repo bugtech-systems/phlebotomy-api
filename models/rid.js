@@ -66,6 +66,8 @@ const RequisitionSchema = new Schema({
   phlebotomist_email: { type: String },
   dispatch_status: { type: String },
   dispatch_history: { type: DispatchHistorySchema },
+  unsuccessful_reason: { type: String },
+  destination_status: { type: String, default: "Pending" },
 });
 
 const Requisition = mongoose.model("rids", RequisitionSchema);
