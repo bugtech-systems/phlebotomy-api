@@ -21,11 +21,13 @@ exports.getByRid = async (req, res) => {
 
   const {
     rid,
+    _id,
     destination_status,
     unsuccessful_reason,
     dispatch_history: { collection_date, panels, samples, site, patient },
   } = requisition;
   let newObj = {
+    _id,
     rid,
     destination_status,
     unsuccessful_reason,
@@ -75,6 +77,11 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   await Rid.findByIdAndUpdate(req.params.id, req.body);
+  res.json({ message: "Rid updated" });
+};
+
+exports.updateByRid = async (req, res) => {
+  await Rid.findOneAndUpdate({ rid: req.params.id }, req.body);
   res.json({ message: "Rid updated" });
 };
 
