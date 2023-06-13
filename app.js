@@ -1,36 +1,38 @@
-require('dotenv').config()
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger/swagger.json');
-const mongoose = require('mongoose');
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger/swagger.json");
+const mongoose = require("mongoose");
 
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: "*"
-}));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use(bodyParser.json());
 
-
-
 //Initialize MongoDB
-mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/phlebotomy-api', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('Connected to MongoDB');
-  // Create and initialize the database here
-})
-.catch((err) => {
-  console.error('Error connecting to MongoDB:', err);
-});
-
-
+mongoose
+  .connect(
+    process.env.MONGO_URI || "mongodb://127.0.0.1:27017/phlebotomy-api",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log("Connected to MongoDB");
+    // Create and initialize the database here
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err);
+  });
 
 // Import route modules
 // const clientRoutes = require('./routes/client');
@@ -43,12 +45,13 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/phlebotomy-
 // const siteRoutes = require('./routes/site');
 // const teamRoutes = require('./routes/team');
 // const requisitionRoutes = require('./routes/requisition');
-const ridRoutes = require('./routes/rid');
+const ridRoutes = require("./routes/rid");
+const authRoutes = require("./routes/auth");
+
 // const itemsRoutes = require('./routes/items');
 
 //Swagger Docs
-app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Use routes in the app
 // app.use('/api/clients', clientRoutes);
@@ -61,7 +64,9 @@ app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // app.use('/api/schedules', scheduleRoutes);
 // app.use('/api/sites', siteRoutes);
 // app.use('/api/teams', teamRoutes);
-app.use('/api/rids', ridRoutes);
+app.use("/api/rids", ridRoutes);
+app.use("/api/auth", authRoutes);
+
 // app.use('/api/items', itemsRoutes);
 
 // Start server
