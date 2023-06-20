@@ -15,7 +15,7 @@ app.use(
   })
 );
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '100MB' }));
 
 //Initialize MongoDB
 mongoose

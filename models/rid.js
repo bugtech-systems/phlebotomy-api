@@ -40,6 +40,12 @@ const PatientSchema = new Schema({
   address: { type: String },
 });
 
+const Insurance = new Schema({
+  insurance_name: { type: String, required: false },
+  insurance_policy_number: { type: Number, required: false },
+  insurance_group_number: { type: Number, required: false },
+});
+
 const DispatchHistorySchema = new Schema({
   scheduled_date: { type: Date },
   phlebotomist: { type: PhlebotomistSchema },
@@ -49,9 +55,10 @@ const DispatchHistorySchema = new Schema({
   collection_date: { type: Date, required: false },
   received_date: { type: Date, required: false },
   provider: { type: String },
-  venipuncture: { type: Boolean },
+  venipuncture: { type: String },
   requisition_comment: { type: String, required: false },
   phlebotomist_comment: { type: String, required: false },
+  dispatch_comment: { type: String, required: false },
   test_priority: { type: String, required: false },
   panels: [{ type: String }],
   samples: [{ type: SampleSchema }],
@@ -68,6 +75,7 @@ const RequisitionSchema = new Schema({
   dispatch_history: { type: DispatchHistorySchema },
   unsuccessful_reason: { type: String },
   destination_status: { type: String, default: "Pending" },
+  insurance: { type: Insurance }
 });
 
 const Requisition = mongoose.model("rids", RequisitionSchema);
