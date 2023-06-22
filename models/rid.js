@@ -42,8 +42,8 @@ const PatientSchema = new Schema({
 
 const Insurance = new Schema({
   insurance_name: { type: String, required: false },
-  insurance_policy_number: { type: Number, required: false },
-  insurance_group_number: { type: Number, required: false },
+  insurance_policy_number: { type: String, required: false },
+  insurance_group_number: { type: String, required: false },
 });
 
 const DispatchHistorySchema = new Schema({
