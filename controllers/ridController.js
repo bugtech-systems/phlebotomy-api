@@ -4,7 +4,7 @@ const csvToJson = require("csvtojson");
 const path = require("path");
 
 exports.getAll = async (req, res) => {
-  const rids = await Rid.find();
+  const rids = await Rid.find().limit(100);
   res.json(rids);
 };
 
