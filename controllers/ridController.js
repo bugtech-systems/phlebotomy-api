@@ -4,12 +4,15 @@ const csvToJson = require("csvtojson");
 const path = require("path");
 
 exports.getAll = async (req, res) => {
+  console.log('GET ALL')
   const rids = await Rid.find().limit(100);
   res.json(rids);
 };
 
 exports.getById = async (req, res) => {
   const { id } = req.params;
+  console.log('GET BY ID')
+
   try {
     if (ObjectId.isValid(id) && !Number(id)) {
       const rid = await Rid.findById(id);
