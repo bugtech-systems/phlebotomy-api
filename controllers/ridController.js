@@ -1,3 +1,4 @@
+const ObjectId = require('mongodb').ObjectId;
 const Rid = require("../models/rid");
 const csvToJson = require("csvtojson");
 const path = require("path");
@@ -8,8 +9,22 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getById = async (req, res) => {
-  const rid = await Rid.findById(req.params.id);
-  res.json(rid);
+  const { id } = req.params;
+  try {
+    if (ObjectId.isValid(id) && !Number(id)) {
+      const rid = await Rid.findById(id);
+      if (!rid) return res.status(404).json({ m: "Requisition not found." });
+      return res.json(rid);
+    } else {
+      const rid = await Rid.findOne({ rid: Number(id) });
+      if (!rid) return res.status(404).json({ m: "Requisition not found." });
+      return res.json(rid);
+    }
+  } catch (err) {
+    console.log(err)
+    return res.status(400).json({ message: 'Something went wrong!' })
+  }
+
 };
 
 exports.getByRid = async (req, res) => {
@@ -76,8 +91,20 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  await Rid.findByIdAndUpdate(req.params.id, req.body);
-  res.json({ message: "Rid updated" });
+  const { id } = req.params;
+  try {
+    if (ObjectId.isValid(id) && !Number(id)) {
+      await Rid.findByIdAndUpdate(id, req.body);
+      return res.json({ message: "Requisition updated" });
+    } else {
+      await Rid.findOneAndUpdate({ rid: id }, req.body);
+      return res.json({ message: "Requisition updated" });
+    }
+  } catch (err) {
+    return res.status(400).json({ message: 'Unable to update, Something went wrong!' })
+  }
+
+
 };
 
 exports.updateByRid = async (req, res) => {
@@ -99,8 +126,17 @@ exports.bulkDelete = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-  await Rid.findByIdAndDelete(req.params.id);
-  res.json({ message: "Rid deleted" });
+  const { id } = req.params;
+
+
+  if (ObjectId.isValid(id) && !Number(id)) {
+    const rid = await Rid.findByIdAndDelete(id);
+    return res.json({ m: "Requisition deleted." });
+  } else {
+    const rid = await Rid.findOneAndDelete({ rid: Number(id) });
+    return res.json({ m: "Requisition deleted." });
+  }
+
 };
 
 exports.upload = async (req, res) => {
