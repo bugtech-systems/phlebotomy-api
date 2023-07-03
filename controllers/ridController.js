@@ -5,7 +5,9 @@ const path = require("path");
 
 exports.getAll = async (req, res) => {
   console.log('GET ALL')
-  const rids = await Rid.find().limit(100);
+
+
+  const rids = await Rid.find(req.query).limit(100);
   res.json(rids);
 };
 
@@ -87,23 +89,38 @@ exports.bulkCreate = async (req, res) => {
 
 exports.create = async (req, res) => {
   let rid = await Rid.findOne({ rid: req.body.rid });
-  if (rid) return res.status(401).json({ m: "Requisition ID already exist!" });
+  if (rid) return res.json(rid);
   const newRid = new Rid(req.body);
   await newRid.save();
-  res.json(newRid);
+  return res.json(newRid);
 };
 
 exports.update = async (req, res) => {
   const { id } = req.params;
   try {
-    if (ObjectId.isValid(id) && !Number(id)) {
-      await Rid.findByIdAndUpdate(id, req.body);
-      return res.json({ message: "Requisition updated" });
-    } else {
-      await Rid.findOneAndUpdate({ rid: id }, req.body);
-      return res.json({ message: "Requisition updated" });
-    }
+    let options = ObjectId.isValid(id) && !Number(id) ? { _id: id } : { rid: id };
+    let order = await Rid.findOne(options);
+    if (!order) return res.status(404).json({ message: 'Order not exist!' })
+
+    let newObj = {};
+    newObj = req.body;
+
+
+    delete newObj.rid;
+    delete newObj._id;
+
+    let newOrder = await Rid.findByIdAndUpdate(order._id, newObj, { new: true })
+    return res.status(200).json(newOrder);
+
+    // if (ObjectId.isValid(id) && !Number(id)) {
+    //   await Rid.findByIdAndUpdate(id, req.body);
+    //   return res.json({ message: "Requisition updated" });
+    // } else {
+    //   await Rid.findOneAndUpdate({ rid: id }, req.body);
+    //   return res.json({ message: "Requisition updated" });
+    // }
   } catch (err) {
+    console.log(err)
     return res.status(400).json({ message: 'Unable to update, Something went wrong!' })
   }
 
