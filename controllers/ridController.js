@@ -89,7 +89,7 @@ exports.bulkCreate = async (req, res) => {
 
 exports.create = async (req, res) => {
   let rid = await Rid.findOne({ rid: req.body.rid });
-  if (rid) return res.json(rid);
+  if (rid) return res.status(400).json({ message: 'Requisition with same id Already Exist!', data: rid });
   const newRid = new Rid(req.body);
   await newRid.save();
   return res.json(newRid);
