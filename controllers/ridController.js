@@ -4,8 +4,13 @@ const csvToJson = require("csvtojson");
 const path = require("path");
 
 exports.getAll = async (req, res) => {
-  const rids = await Rid.find(req.query).limit(100);
-  return res.json(rids);
+  try {
+    const rids = await Rid.find(req.query).limit(500);
+    return res.json(rids);
+  } catch (err) {
+    console.log(err)
+    return res.status(400).json({ message: 'Something went wrong!', error: err })
+  }
 };
 
 exports.getById = async (req, res) => {
