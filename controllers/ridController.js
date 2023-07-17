@@ -4,8 +4,10 @@ const csvToJson = require("csvtojson");
 const path = require("path");
 
 exports.getAll = async (req, res) => {
+
+  console.log(`GET ALL`, req.query)
   try {
-    const rids = await Rid.find(req.query).limit(500);
+    const rids = await Rid.find(req.query).limit(req.query.limit ? req.query.limit : 100);
     return res.json(rids);
   } catch (err) {
     console.log(err)

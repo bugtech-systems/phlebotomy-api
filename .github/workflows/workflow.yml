@@ -34,7 +34,7 @@ jobs:
         with:
           host: bugtech.solutions
           username: bugtech
-          password: 420230
+          password: 422232
           port: 22
           script: |
               cd /var/www/development/solaris/phlebotomy-api
