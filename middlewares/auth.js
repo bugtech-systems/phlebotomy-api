@@ -30,7 +30,7 @@ exports.protect = async (req, res, next) => {
 
       if (decoded.user_id !== process.env.USER_ID)
         return res.status(401).json({ m: "Unauthorized", d: "error" });
-
+      console.log('AUTHORIZED!')
       next();
     });
   } catch (error) {
