@@ -16,18 +16,18 @@ app.use(
 );
 
 app.use(bodyParser.json({ limit: '100MB' }));
-
+let dbUrl = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/phlebotomy-api"
 //Initialize MongoDB
 mongoose
   .connect(
-    process.env.MONGO_URI || "mongodb://127.0.0.1:27017/phlebotomy-api",
+    dbUrl,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }
   )
   .then(() => {
-    console.log("Connected to MongoDB");
+    console.log("Connected to MongoDB", dbUrl);
     // Create and initialize the database here
   })
   .catch((err) => {
