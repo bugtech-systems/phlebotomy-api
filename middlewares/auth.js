@@ -13,6 +13,8 @@ exports.protect = async (req, res, next) => {
   }
 
   if (!token) {
+    console.log("UNAUTH");
+
     return res.status(403).json({
       text: "No token provided!",
       type: "error",
@@ -25,6 +27,7 @@ exports.protect = async (req, res, next) => {
 
     jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {
+        console.log('UNAUTHORIZED!')
         return res.status(401).json({ m: "Unauthorized", d: "error" });
       }
 
@@ -41,7 +44,8 @@ exports.protect = async (req, res, next) => {
         errorTitle: error.name,
       })
     );
-    return next(new ErrorResponse(401, "Session expired please relogin"));
+    console.log('UNAUTHORIZED!')
+    return res.status(401).json({ m: "Session expired please relogin", d: error });
   }
 };
 
@@ -57,5 +61,5 @@ exports.generateToken = async (req, res) => {
     }
   );
 
-  res.status(200).json({ token });
+  return res.status(200).json({ token });
 };
