@@ -7,7 +7,7 @@ exports.getAll = async (req, res) => {
 
   console.log(`GET ALL`, req.query)
   try {
-    const rids = await Rid.find(req.query).limit(req.query.limit ? req.query.limit : 100);
+    const rids = await Rid.find(req.query).limit(req.query.limit ? req.query.limit : 100).sort({ dispatch_date: -1 });
     return res.json(rids);
   } catch (err) {
     console.log(err)
