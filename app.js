@@ -47,6 +47,7 @@ mongoose
 // const requisitionRoutes = require('./routes/requisition');
 const ridRoutes = require("./routes/rid");
 const authRoutes = require("./routes/auth");
+const checkListRoutes = require("./routes/check_list");
 
 // const itemsRoutes = require('./routes/items');
 
@@ -64,6 +65,7 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // app.use('/api/schedules', scheduleRoutes);
 // app.use('/api/sites', siteRoutes);
 // app.use('/api/teams', teamRoutes);
+app.use("/api/checklist", checkListRoutes);
 app.use("/api/rids", ridRoutes);
 app.use("/api/auth", authRoutes);
 
