@@ -2,15 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const checkListSchema = new Schema({
-    description: String,
-    isDeleted: {
-        type: Boolean,
-        default: false
-    }
+    phlebotomist_email: { type: String },
+    check_lists: [String],
+    checklistDate: Date
 }, {
     timestamps: true
 });
 
-const CheckList = mongoose.model('checklists', checkListSchema);
+const CheckList = mongoose.model('UserCheckList', checkListSchema);
 
 module.exports = CheckList;

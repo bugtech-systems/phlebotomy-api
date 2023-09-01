@@ -25,6 +25,6 @@ exports.update = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-  await CheckList.findByIdAndDelete(req.params.id);
+  await CheckList.findByIdAndUpdate(req.params.id, { isDeleted: true });
   res.json({ message: 'Check List deleted' });
 };
