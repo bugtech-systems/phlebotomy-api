@@ -48,6 +48,7 @@ mongoose
 const ridRoutes = require("./routes/rid");
 const authRoutes = require("./routes/auth");
 const checkListRoutes = require("./routes/check_list");
+const samsaraRoutes = require("./routes/samsara");
 
 // const itemsRoutes = require('./routes/items');
 
@@ -68,6 +69,7 @@ app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/checklist", checkListRoutes);
 app.use("/api/rids", ridRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/v1/samsara", samsaraRoutes)
 
 // app.use('/api/items', itemsRoutes);
 
