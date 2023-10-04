@@ -279,11 +279,29 @@ exports.getDriverVehicleAssignments = async (req, res) => {
 		let arrayData = vehicleAssignmentResponse.data.data;
 
 		let updateAll = await Promise.all(arrayData.map(async (a) => {
-			let dbRecord = await VehicleAssignment.findOne({ 'driver.id': a.driver.id, 'vehicle.id': a.vehicle.id })
+			let dbRecord = await VehicleAssignment.findOne({ 'driver.id': a.driver.id, 'vehicle.id': a.vehicle.id }).sort({ createdAt: -1 })
 
 			if (dbRecord) {
 				/// Update
-				let update = {
+				let record = {
+					driver: {
+						id: dbRecord.driver?.id,
+						name: dbRecord.driver?.name
+					},
+					vehicle: {
+						id: dbRecord.vehicle?.id,
+						name: dbRecord.vehicle?.name,
+						externalIds: {
+							serial: dbRecord.vehicle?.externalIds['serial'],
+							vin: dbRecord.vehicle?.externalIds['vin']
+						}
+					},
+					isPassenger: dbRecord.isPassenger,
+					assignmentType: dbRecord.assignmentType,
+					assignedAtTime: dbRecord.assignedAtTime
+				}
+
+				let newRecord = {
 					driver: {
 						id: a.driver?.id,
 						name: a.driver?.name
@@ -292,23 +310,34 @@ exports.getDriverVehicleAssignments = async (req, res) => {
 						id: a.vehicle?.id,
 						name: a.vehicle?.name,
 						externalIds: {
-							serial: a.vehicle.externalIds['samsara.serial'],
-							vin: a.vehicle.externalIds['samsara.vin']
+							serial: a.vehicle?.externalIds['serial'],
+							vin: a.vehicle?.externalIds['samsara.vin']
 						}
 					},
-					startTime: a.startTime,
-					endTime: a.endTime,
 					isPassenger: a.isPassenger,
-					assignedAtTime: a.assignedAtTime,
-					assignmentType: a.assignmentType
+					assignmentType: a.assignmentType,
+					assignedAtTime: a.assignedAtTime
 				}
 
-				let assignment = await VehicleAssignment.findOneAndUpdate(dbRecord._id, update)
 
-				console.log(assignment, "UPDATED AN EXISTING ASSIGNMENT HERE!")
+				// console.log(record, "OLD INEEEE")
 
+				console.log(JSON.stringify(newRecord))
+				console.log(JSON.stringify(record))
+
+				if (JSON.stringify(newRecord) !== JSON.stringify(record)) {
+					let createUpdatedRecord = await VehicleAssignment.create(newRecord)
+					console.log(createUpdatedRecord, "NEWLY CREATED")
+					return res.json({
+						message: "Success",
+					});
+				}
+
+				// console.log(assignment, "UPDATED AN EXISTING ASSIGNMENT HERE!")
 			} else {
 				/// Create 
+				console.log("SUPPOSED TRIGGERED ONLY INITIALLY RIGHT?")
+
 				let newAssignment = await VehicleAssignment.create({
 					driver: {
 						id: a.driver?.id,
@@ -318,8 +347,8 @@ exports.getDriverVehicleAssignments = async (req, res) => {
 						id: a.vehicle?.id,
 						name: a.vehicle?.name,
 						externalIds: {
-							serial: a.vehicle.externalIds['samsara.serial'],
-							vin: a.vehicle.externalIds['samsara.vin']
+							serial: a.vehicle.externalIds['serial'],
+							vin: a.vehicle.externalIds['vin']
 						}
 					},
 					startTime: a.startTime,
@@ -328,17 +357,17 @@ exports.getDriverVehicleAssignments = async (req, res) => {
 					assignedAtTime: a.assignedAtTime,
 					assignmentType: a.assignmentType
 				})
-				console.log(newAssignment, "NEWLY CREATED ASSIGNMENT!")
+				// console.log(newAssignment, "NEWLY CREATED ASSIGNMENT!")
 			}
 		}))
 
 		return res.status(200).json({
 			code: 200,
-			message: "Success"
+			message: 'Success!'
 		})
 
 	} catch (error) {
-		console.log(error.message, "Error Response")
+		console.log(error)
 	}
 }
 
@@ -414,18 +443,76 @@ exports.snapStats = async (req, res) => {
 		let arrayResponse = await Promise.all(array.map(async (data) => {
 
 			let statsRecord = await VehicleStatsHistory.findOne({ id: data.id })
-			console.log(statsRecord, "EXISTING!")
-			if (statsRecord) {
+			// console.log(statsRecord, "EXISTING!")
+			if (statsRecord.length > 0) {
 				/// Update
-				let updateStatsHistory = await VehicleStatsHistory.findByIdAndUpdate(statsRecord._id, data)
-				console.log(updateStatsHistory, "UPDATED STATS HIST")
+				let newStats = {
+					id: data.id,
+					name: data.name,
+					externalIds: {
+						serial: data.externalIds['serial'],
+						vin: data.externalIds['vin']
+					},
+					gpsOdometerMeters: {
+						time: data.gpsOdometerMeters?.time,
+						value: data.gpsOdometerMeters?.value
+					},
+					gps: {
+						time: data.gps.time,
+						latitude: data.gps.latitude,
+						longitude: data.gps.latitude,
+						headingDegrees: data.gps.headingDegrees,
+						speedMilesPerHour: data.gps.speedMilesPerHour,
+						reverseGeo: {
+							formattedLocation: data.gps.reverseGeo.formattedLocation
+						},
+						isEcuSpeed: {
+							type: data.gps.isEcuSpeed.type,
+							value: data.gps.isEcuSpeed.value
+						}
+					}
+				}
+
+				let dataRecord = {
+					id: statsRecord.id,
+					name: statsRecord.name,
+					externalIds: {
+						serial: statsRecord.externalIds['serial'],
+						vin: statsRecord.externalIds['vin']
+					},
+					gpsOdometerMeters: {
+						time: statsRecord.gpsOdometerMeters?.time,
+						value: statsRecord.gpsOdometerMeters?.value
+					},
+					gps: {
+						time: statsRecord.gps.time,
+						latitude: statsRecord.gps.latitude,
+						longitude: statsRecord.gps.latitude,
+						headingDegrees: statsRecord.gps.headingDegrees,
+						speedMilesPerHour: statsRecord.gps.speedMilesPerHour,
+						reverseGeo: {
+							formattedLocation: statsRecord.gps.reverseGeo.formattedLocation
+						},
+						isEcuSpeed: {
+							type: data.gps.isEcuSpeed.type,
+							value: data.gps.isEcuSpeed.value
+						}
+					}
+				}
+
+				if (JSON.stringify(newStats) !== JSON.stringify(dataRecord)) {
+					let createUpdatedRecord = await VehicleAssignment.create(newStats)
+					// console.log(createUpdatedRecord, "NEWLY CREATED")
+					return res.json({
+						message: "Success",
+					});
+				}
+
 			} else {
 				/// Create
 				let newStatsHistory = await VehicleStatsHistory.create(data)
-				console.log(newStatsHistory, "NEWLY CREATED STATS HIST")
-				return res.json(newStatsHistory)
+				// console.log(newStatsHistory, "NEWLY CREATED STATS HIST")
 			}
-
 		}))
 		return res.json({
 			code: 200,
@@ -433,6 +520,7 @@ exports.snapStats = async (req, res) => {
 		})
 	} catch (error) {
 		console.log(error)
+		return res.json(error.message)
 	}
 }
 
