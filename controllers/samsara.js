@@ -186,6 +186,8 @@ exports.createDriverVehicleAssignment = async (req, res) => {
 		if (vehicleAssignment) {
 			let { data } = vehicleAssignment.data;
 			console.log(data, "DATA NI VEHICLE DESTRUCTURED")
+			const newDataSS = await Promise.all(async)
+
 
 			// const createVehicleAssignment = await VehicleAssignment.create({
 			// 	startTime: moment.utc(startTime).format(),
@@ -257,15 +259,14 @@ exports.updateDriverVehicleAssignment = async (req, res) => {
 exports.getDriverVehicleAssignments = async (req, res) => {
 	let { filterBy, driverIds, startTime, endTime, driverTagIds, vehicleTagIds, after, assignmentType } = req.query;
 
-	console.log(req.query, "QUERY PARAMS")
+	// console.log(req.query, "QUERY PARAMS")
 	const queryString = Object.entries(req.query)
 		.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
 		.join('&');
-	let array = []
 
 	try {
 
-		const options = {
+		const vehicleAssignmentOptions = {
 			method: 'GET',
 			url: `${process.env.SAMSARA_URL}/fleet/driver-vehicle-assignments?${queryString}`,
 			headers: {
@@ -274,44 +275,70 @@ exports.getDriverVehicleAssignments = async (req, res) => {
 			}
 		};
 
-		console.log(options, "OPTIONS")
+		let vehicleAssignmentResponse = await axios.request(vehicleAssignmentOptions)
+		let arrayData = vehicleAssignmentResponse.data.data;
 
-		const response = await axios.request(options)
-		if (response) {
-			array = response.data.data;
-			console.log(response.data.data, "SUCCESS RESPONSE")
+		let updateAll = await Promise.all(arrayData.map(async (a) => {
+			let dbRecord = await VehicleAssignment.findOne({ 'driver.id': a.driver.id, 'vehicle.id': a.vehicle.id })
 
-			let responseArray = await Promise.all(array.map(async (data) => {
-				let newObject = {
-					startTime: data.startTime,
-					endTime: data.endTime,
-					assignedAtTime: data.assignedAtTime,
-					assignmentType: data.assignmentType,
+			if (dbRecord) {
+				/// Update
+				let update = {
 					driver: {
-						id: data.driver.id,
-						name: data.driver.name
+						id: a.driver?.id,
+						name: a.driver?.name
 					},
 					vehicle: {
-						id: data.vehicle.id,
-						name: data.vehicle.name,
-						serial: data.vehicle.externalIds['samsara.serial'],
-						vin: data.vehicle.externalIds['samsara.vin'],
-					}
+						id: a.vehicle?.id,
+						name: a.vehicle?.name,
+						externalIds: {
+							serial: a.vehicle.externalIds['samsara.serial'],
+							vin: a.vehicle.externalIds['samsara.vin']
+						}
+					},
+					startTime: a.startTime,
+					endTime: a.endTime,
+					isPassenger: a.isPassenger,
+					assignedAtTime: a.assignedAtTime,
+					assignmentType: a.assignmentType
 				}
-				console.log(data, "DATA INE!")
-				const newAssignment = await VehicleAssignment.create(newObject)
 
-				return newAssignment;
-			}))
-			return res.json(responseArray)
-		}
+				let assignment = await VehicleAssignment.findOneAndUpdate(dbRecord._id, update)
+
+				console.log(assignment, "UPDATED AN EXISTING ASSIGNMENT HERE!")
+
+			} else {
+				/// Create 
+				let newAssignment = await VehicleAssignment.create({
+					driver: {
+						id: a.driver?.id,
+						name: a.driver?.name
+					},
+					vehicle: {
+						id: a.vehicle?.id,
+						name: a.vehicle?.name,
+						externalIds: {
+							serial: a.vehicle.externalIds['samsara.serial'],
+							vin: a.vehicle.externalIds['samsara.vin']
+						}
+					},
+					startTime: a.startTime,
+					endTime: a.endTime,
+					isPassenger: a.isPassenger,
+					assignedAtTime: a.assignedAtTime,
+					assignmentType: a.assignmentType
+				})
+				console.log(newAssignment, "NEWLY CREATED ASSIGNMENT!")
+			}
+		}))
+
+		return res.status(200).json({
+			code: 200,
+			message: "Success"
+		})
 
 	} catch (error) {
-		console.log(error.message)
-		return res.json({
-			code: 404,
-			message: error.message
-		})
+		console.log(error.message, "Error Response")
 	}
 }
 
@@ -370,7 +397,6 @@ exports.deleteDriverVehicleAssignment = async (req, res) => {
 // Method: GET
 // params: /vehicles/stats
 exports.snapStats = async (req, res) => {
-	let array = [];
 
 	try {
 		const statsOption = {
@@ -383,47 +409,28 @@ exports.snapStats = async (req, res) => {
 		};
 
 		const statsHistory = await axios.request(statsOption)
-		if (statsHistory) {
-			array = statsHistory.data.data;
+		let array = statsHistory.data.data;
 
-			let arrayResponse = await Promise.all(array.map(async (data) => {
+		let arrayResponse = await Promise.all(array.map(async (data) => {
 
-				console.log(data.externalIds, "HERE DATA")
+			let statsRecord = await VehicleStatsHistory.findOne({ id: data.id })
+			console.log(statsRecord, "EXISTING!")
+			if (statsRecord) {
+				/// Update
+				let updateStatsHistory = await VehicleStatsHistory.findByIdAndUpdate(statsRecord._id, data)
+				console.log(updateStatsHistory, "UPDATED STATS HIST")
+			} else {
+				/// Create
+				let newStatsHistory = await VehicleStatsHistory.create(data)
+				console.log(newStatsHistory, "NEWLY CREATED STATS HIST")
+				return res.json(newStatsHistory)
+			}
 
-				let newObj = {
-					id: data.id,
-					name: data.name,
-					externalIds: {
-						serial: data.externalIds?.['samsara.serial'],
-						vin: data.externalIds?.['samsara.vin']
-					},
-					gpsOdometerMeters: {
-						time: data.gpsOdometerMeters?.time,
-						value: data.gpsOdometerMeters?.value
-					},
-					gps: {
-						time: data.gps?.time,
-						latitude: data.gps?.latitude,
-						longitude: data.gps?.longitude,
-						headingDegrees: data.gps?.headingDegrees,
-						speedMilesPerHour: data.gps?.speedMilesPerHour,
-						reverseGeo: {
-							formattedLocation: data.gps?.reverseGeo?.formattedLocation
-						},
-						isEcuSpeed: data.gps?.isEcuSpeed
-					}
-				}
-
-				const newVehicleStatsHistory = await VehicleStatsHistory.create(newObj)
-				return newVehicleStatsHistory;
-			}))
-			return res.json(arrayResponse)
-		} else {
-			return res.json(400).json({
-				code: 400,
-				message: `Someting wen't wrong!`
-			})
-		}
+		}))
+		return res.json({
+			code: 200,
+			message: 'Success'
+		})
 	} catch (error) {
 		console.log(error)
 	}
