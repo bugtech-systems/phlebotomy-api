@@ -310,7 +310,7 @@ exports.getDriverVehicleAssignments = async (req, res) => {
 						id: a.vehicle?.id,
 						name: a.vehicle?.name,
 						externalIds: {
-							serial: a.vehicle?.externalIds['serial'],
+							serial: a.vehicle?.externalIds['samsara.serial'],
 							vin: a.vehicle?.externalIds['samsara.vin']
 						}
 					},
@@ -347,12 +347,10 @@ exports.getDriverVehicleAssignments = async (req, res) => {
 						id: a.vehicle?.id,
 						name: a.vehicle?.name,
 						externalIds: {
-							serial: a.vehicle.externalIds['serial'],
-							vin: a.vehicle.externalIds['vin']
+							serial: a.vehicle.externalIds['samsara.serial'],
+							vin: a.vehicle.externalIds['samsara.vin']
 						}
 					},
-					startTime: a.startTime,
-					endTime: a.endTime,
 					isPassenger: a.isPassenger,
 					assignedAtTime: a.assignedAtTime,
 					assignmentType: a.assignmentType
@@ -444,14 +442,14 @@ exports.snapStats = async (req, res) => {
 
 			let statsRecord = await VehicleStatsHistory.findOne({ id: data.id })
 			// console.log(statsRecord, "EXISTING!")
-			if (statsRecord.length > 0) {
+			if (statsRecord) {
 				/// Update
 				let newStats = {
 					id: data.id,
 					name: data.name,
 					externalIds: {
-						serial: data.externalIds['serial'],
-						vin: data.externalIds['vin']
+						serial: data.externalIds['samsara.serial'],
+						vin: data.externalIds['samsara.vin']
 					},
 					gpsOdometerMeters: {
 						time: data.gpsOdometerMeters?.time,
