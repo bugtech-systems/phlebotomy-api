@@ -1,7 +1,7 @@
 const Realm = require('realm');
 const User = require('../models/user');
 
-const realmApp = new Realm.App({ id: 'data-gsait' });
+const realmApp = new Realm.App({ id: process.env.APP_ID });
 
 async function registerUser(email, password) {
     try {
