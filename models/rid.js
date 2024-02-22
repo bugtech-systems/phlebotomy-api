@@ -21,23 +21,23 @@ const PhlebotomistSchema = new Schema({
 
 const SiteSchema = new Schema({
   id: { type: Number },
-  name: { type: String },
-  address: { type: String },
-  type: { type: String },
-  phone: { type: String },
+  name: { type: String, default: ''},
+  address: { type: String, default: ''},
+  type: { type: String, default: ''},
+  phone: { type: String, default: ''},
   client: {
     id: { type: Number },
-    name: { type: String },
+    name: { type: String, default: ''}
   },
 });
 
 const PatientSchema = new Schema({
   id: { type: Number },
-  first_name: { type: String },
-  last_name: { type: String },
+  first_name: { type: String, default: ''},
+  last_name: { type: String, default: ''},
   date_of_birth: { type: Date, required: false },
-  phone: { type: String },
-  address: { type: String },
+  phone: { type: String, default: ''},
+  address: { type: String, default: ''},
 });
 
 const Insurance = new Schema({
@@ -55,7 +55,7 @@ const DispatchHistorySchema = new Schema({
   collection_date: { type: Date, required: false },
   received_date: { type: Date, required: false },
   provider: { type: String },
-  venipuncture: { type: String },
+  venipuncture: { type: String, default: ''},
   requisition_comment: { type: String, required: false },
   phlebotomist_comment: { type: String, required: false },
   dispatch_comment: { type: String, required: false },

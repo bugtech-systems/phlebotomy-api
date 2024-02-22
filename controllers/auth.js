@@ -1,11 +1,12 @@
 const Realm = require('realm');
-const User = require('../models/user');
+const Users = require('../models/user');
 
-const realmApp = new Realm.App({ id: process.env.APP_ID });
+const realmApp = new Realm.App({ id: `${process.env.APP_ID}` });
 
 async function registerUser(email, password) {
     try {
-        await realmApp.emailPasswordAuth.registerUser(email, password);
+        const createNew = await realmApp.emailPasswordAuth.registerUser(email, password);
+        console.log(createNew, "NEW")
         return true; // Registration successful
     } catch (error) {
         console.error('Error registering user:', error);
@@ -18,7 +19,7 @@ exports.createRealmUser = async (req, res) => {
     const registrationResult = await registerUser({ email, password });
 
     if (registrationResult) {
-        const userRealm = await User.create({
+        const userRealm = await Users.create({
             email,
             role
         })

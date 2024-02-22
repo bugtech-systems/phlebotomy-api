@@ -11,8 +11,8 @@ const patientSchema = new Schema({
     site_id: {
       type: Number
     },
-    address: String,
-    phone: String,
+    address: { type: String, default: ''},
+    phone: { type: String, default: ''},
     dob: Date,
     patient_id: {
           type: Number,

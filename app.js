@@ -16,7 +16,8 @@ app.use(
 );
 
 app.use(bodyParser.json({ limit: '100MB' }));
-let dbUrl = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/phlebotomy-api"
+let dbUrl = `${process.env.PRIMARY_CONNECTION_STRING}`
+console.log(dbUrl)
 //Initialize MongoDB
 mongoose
   .connect(
